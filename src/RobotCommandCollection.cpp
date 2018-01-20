@@ -18,9 +18,9 @@ namespace AutonoScript
     delete _commands;
   }
 
-  void RobotCommandCollection::AddRobotCommand(double magnitude, RobotCommands command)
+  void RobotCommandCollection::AddRobotCommand(double magnitude, RobotCommands command, double facing)
   {
-    _commands->push_back(new RobotCommand(magnitude, command));
+    _commands->push_back(new RobotCommand(magnitude, command, facing));
   }
 
   RobotCommand* RobotCommandCollection::GetCommand(int index)

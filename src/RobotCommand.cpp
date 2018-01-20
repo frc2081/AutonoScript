@@ -3,16 +3,23 @@
 
 namespace AutonoScript
 {
-  RobotCommand::RobotCommand(double magnitude, RobotCommands command)
+  RobotCommand::RobotCommand(double magnitude, RobotCommands command, double facing)
   {
-    _magnitude = magnitude;
+    _facing = facing;
     _command = command;
+    _magnitude = magnitude;
   }
 
   RobotCommand::~RobotCommand()
   {
+    _facing = 0;
     _magnitude = -1;
     _command = UnknownCommand;
+  }
+
+  double RobotCommand::GetFacing()
+  {
+    return _facing;
   }
 
   double RobotCommand::GetMagnitude()

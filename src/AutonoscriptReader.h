@@ -19,7 +19,7 @@ namespace AutonoScript
 
     private:
       void ReadFromFile(const char* fileName, char** script);
-      int ReadCommand(const char* script, int* position, RobotCommands* command, double* magnitude);
+      int ReadCommand(const char* script, int* position, RobotCommands* command, double* magnitude, double* facing);
   };
 }
 

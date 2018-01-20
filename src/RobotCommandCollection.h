@@ -14,7 +14,7 @@ namespace AutonoScript
       virtual ~RobotCommandCollection();
 
       // Public Methods
-      void AddRobotCommand(double magnitude, RobotCommands command);
+      void AddRobotCommand(double magnitude, RobotCommands command, double facing);
       RobotCommand* GetCommand(int index);
       int GetCommandCount();
      
