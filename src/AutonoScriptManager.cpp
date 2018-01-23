@@ -47,8 +47,9 @@ namespace AutonoScript
   // Private Methods
   int AutonoScriptManager::PrintConsoleHelp()
   {
-    printf("\nUsage: cmd -f FILE\n");
+    printf("\nUsage: cmd -f FILE [-o FILE]\n");
     printf("  -f FILE : Specifies AutonoScript FILE.\n");
+    printf("  -o FILE : Specifies image output FILE.\n");
     printf("  -h      : Prints help information.\n");
   }
 

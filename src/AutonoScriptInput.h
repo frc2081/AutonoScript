@@ -7,7 +7,8 @@ namespace AutonoScript
   {
     UnknownMode = 0x0,
     PrintHelp = 0x1,
-    ReadFromFile = 0x2
+    ReadFromFile = 0x2,
+    GenerateImage = 0x3
   };
 
   class AutonoScriptInput
@@ -19,20 +20,24 @@ namespace AutonoScript
       int IsValid();
 
       char* GetFile();
+      char* GetOutputFile();
       AutonoScriptModes GetMode();
 
       void SetMode(AutonoScriptModes mode);
-      void SetFile(char* file);
+      void SetFile(const char* file);
+      void SetOutputFile(const char* file);
       AutonoScriptInput* Seal();
 
     private:
       int _isValid;
       char* _file;
+      char* _outputFile;
       int _isSealed;
 
       AutonoScriptModes _mode;
 
       void Validate();
+      void SetStringInputValue(char** destination, const char* source);
   };
 }
 

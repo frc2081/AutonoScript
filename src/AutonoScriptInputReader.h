@@ -14,6 +14,7 @@ namespace AutonoScript
       AutonoScriptInput* Read(int argc, char** argv);
     
     private:
+      AutonoScriptModes GetMode(AutonoScriptInput* input);
       int _printHelp;
   };
 }

@@ -17,11 +17,15 @@ namespace AutonoScript
     char arg;
     AutonoScriptInput* input = new AutonoScriptInput();
 
-    while ((arg = getopt(argc, argv, ":f:h")) != -1)
+    while ((arg = getopt(argc, argv, ":f:o:h")) != -1)
       switch(arg)
       {
         case 'f':
           input->SetFile(optarg);
+          break;
+
+        case 'o':
+          input->SetOutputFile(optarg);
           break;
 
         case 'h':
@@ -29,9 +33,25 @@ namespace AutonoScript
           break;
       }
 
-    if (input->GetMode() == UnknownMode && input->GetFile() != NULL)
-      input->SetMode(ReadFromFile);
-
+    input->SetMode(GetMode(input));
     return input->Seal();
+  }
+
+
+  AutonoScriptModes AutonoScriptInputReader::GetMode(AutonoScriptInput* input)
+  {
+    AutonoScriptModes currentMode = input->GetMode();
+
+    if (currentMode != UnknownMode)
+      return currentMode;
+
+
+    if (input->GetOutputFile() != NULL)
+      return GenerateImage;
+
+
+    return input->GetFile() == NULL
+      ? currentMode
+      : ReadFromFile;
   }
 }

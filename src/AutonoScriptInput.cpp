@@ -10,6 +10,7 @@ namespace AutonoScript
     _isSealed = false;
     _mode = UnknownMode;
     _file = NULL;
+    _outputFile = NULL;
   }
 
   AutonoScriptInput::~AutonoScriptInput()
@@ -20,7 +21,11 @@ namespace AutonoScript
     if (_file != NULL)
       free(_file);
 
+    if (_outputFile != NULL)
+      free(_outputFile);
+
     _file = NULL;
+    _outputFile = NULL;
   }
 
   int AutonoScriptInput::IsValid()
@@ -33,6 +38,11 @@ namespace AutonoScript
     return _file;
   }
 
+  char* AutonoScriptInput::GetOutputFile()
+  {
+    return _outputFile;
+  }
+
   AutonoScriptModes AutonoScriptInput::GetMode()
   {
     return _mode;
@@ -43,13 +53,14 @@ namespace AutonoScript
     SET_INPUT(_mode = mode);
   }
 
-  void AutonoScriptInput::SetFile(char* file)
+  void AutonoScriptInput::SetFile(const char* file)
   {
-    if(_isSealed) return;
-    if (_file != NULL) free(_file);
+    SetStringInputValue(&_file, file);
+  }
 
-    _file = (char*) malloc(sizeof(char) * (strlen(file)+1));
-    strcpy(_file, file);
+  void AutonoScriptInput::SetOutputFile(const char* outputFile)
+  {
+    SetStringInputValue(&_outputFile, outputFile);
   }
 
   AutonoScriptInput* AutonoScriptInput::Seal()
@@ -65,5 +76,14 @@ namespace AutonoScript
     // TODO: Expand this.
     _isValid = _file != NULL
       && _mode != UnknownMode;
+  }
+
+  void AutonoScriptInput::SetStringInputValue(char** destination, const char* source)
+  {
+    if(_isSealed) return;
+    if ((*destination) != NULL) free(*destination);
+
+    *destination = (char*) malloc(sizeof(char) * strlen(source)+1);
+    strcpy(*destination, source);
   }
 }
