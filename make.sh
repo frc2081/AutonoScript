@@ -13,6 +13,7 @@ SRC_FILES+=('AutonoscriptReader.cpp')
 SRC_FILES+=('RobotCommandCollection.cpp')
 SRC_FILES+=('AutonoScriptInput.cpp')
 SRC_FILES+=('AutonoScriptInputReader.cpp')
+SRC_FILES+=('AutonoScriptManager.cpp')
 
 # Dynamic Variables
 BASE_DIR="$(dirname "${0}")"
