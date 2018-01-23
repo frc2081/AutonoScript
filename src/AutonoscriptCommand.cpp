@@ -1,62 +1,45 @@
-#include <vector>
 #include <stdio.h>
-#include <unistd.h>
+
 #include "AutonoscriptReader.h"
+#include "AutonoScriptInputReader.h"
 
 using namespace AutonoScript;
 
-static void PrintHelp();
+static void PrintConsoleHelp();
 static int ErrorOut(const char* error, int errCode);
-inline int ReadArgs(int argc, char** argv, char** file, int* shouldExit);
 
 int main(int argc, char** argv)
 {
-  char* file;
-  int rtn, shouldExit;
-
-  unsigned int count;
+  // TODO: Replace this all with a manager.
+  AutonoScriptInput* input;
   RobotCommandCollection* commands;
-  AutonoScriptReader* reader = new AutonoScriptReader();
+  AutonoScriptReader* scriptReader = new AutonoScriptReader();
+  AutonoScriptInputReader* inputReader = new AutonoScriptInputReader();
 
-  // TODO: Implement and Options Reader class.
-  if (rtn = ReadArgs(argc, argv, &file, &shouldExit) || shouldExit)
-    return rtn;
+  input = inputReader->Read(argc, argv);
+  if (input->GetMode() == UnknownMode)
+    return ErrorOut("Must specify an input file with -f.", 1);
+
+  if (input->GetMode() == PrintHelp)
+  {
+    PrintConsoleHelp();
+    return 0;
+  }
   
-  commands = reader->ReadScriptFile(file);
+  commands = scriptReader->ReadScriptFile(input->GetFile());
   for (int i=0; i<commands->GetCommandCount(); i++)
     printf("Magnitude: %f\nType: %d\n\n", (*commands)[i]->GetMagnitude(), (*commands)[i]->GetCommand());
 
-  delete reader;
+  delete input;
   delete commands;
+  delete inputReader;
+  delete scriptReader;
 
   return 0;
 }
 
-inline int ReadArgs(int argc, char** argv, char** file, int* shouldExit)
-{
-  int arg;
 
-  *file = NULL;
-  *shouldExit = 0;
-  while ((arg = getopt(argc, argv, ":f:h")) != -1)
-    switch(arg)
-    {
-      case 'f':
-        *file = optarg;
-        break;
-
-      case 'h':
-        PrintHelp();
-        return !(*shouldExit = 1);
-    }
-
-  if (*file == NULL)
-    return ErrorOut("File was not specified.", -1);
-
-  return 0;
-}
-
-static void PrintHelp()
+static void PrintConsoleHelp()
 {
   printf("\nUsage: cmd -f FILE\n");
   printf("  -f FILE : Specifies AutonoScript FILE.\n");
@@ -65,7 +48,7 @@ static void PrintHelp()
 
 static int ErrorOut(const char* error, int errCode)
 {
-  PrintHelp();
+  PrintConsoleHelp();
   fprintf(stderr, "\nError: %s\n", error);
 
   return errCode;

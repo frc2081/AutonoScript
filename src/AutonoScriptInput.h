@@ -6,7 +6,8 @@ namespace AutonoScript
   enum AutonoScriptModes
   {
     UnknownMode = 0x0,
-    ReadFromFile = 0x1
+    PrintHelp = 0x1,
+    ReadFromFile = 0x2
   };
 
   class AutonoScriptInput
@@ -22,7 +23,7 @@ namespace AutonoScript
 
       void SetMode(AutonoScriptModes mode);
       void SetFile(char* file);
-      void Seal();
+      AutonoScriptInput* Seal();
 
     private:
       int _isValid;
@@ -30,6 +31,8 @@ namespace AutonoScript
       int _isSealed;
 
       AutonoScriptModes _mode;
+
+      void Validate();
   };
 }
 

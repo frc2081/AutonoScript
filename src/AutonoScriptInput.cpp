@@ -1,4 +1,6 @@
-#include "AutonoScriptCommandInputReader.h"
+#include <stdlib.h>
+#include <string.h>
+#include "AutonoScriptInputReader.h"
 
 namespace AutonoScript
 {
@@ -10,10 +12,14 @@ namespace AutonoScript
     _file = NULL;
   }
 
-  virtual AutonoScriptInput::~AutonoScriptInput()
+  AutonoScriptInput::~AutonoScriptInput()
   {
     _isSealed = true;
     _mode = UnknownMode;
+
+    if (_file != NULL)
+      free(_file);
+
     _file = NULL;
   }
 
@@ -39,13 +45,19 @@ namespace AutonoScript
 
   void AutonoScriptInput::SetFile(char* file)
   {
-    SET_INPUT(_file = file);
+    if(_isSealed) return;
+    if (_file != NULL) free(_file);
+
+    _file = (char*) malloc(sizeof(char) * (strlen(file)+1));
+    strcpy(_file, file);
   }
 
-  void AutonoScriptInput::Seal()
+  AutonoScriptInput* AutonoScriptInput::Seal()
   {
     _isSealed = true;
     Validate();
+
+    return this;
   }
 
   void AutonoScriptInput::Validate()
