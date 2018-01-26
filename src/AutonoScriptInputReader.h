@@ -12,6 +12,7 @@ namespace AutonoScript
       virtual ~AutonoScriptInputReader();
 
       AutonoScriptInput* Read(int argc, char** argv);
+      int PrintConsoleHelp();
     
     private:
       AutonoScriptModes GetMode(AutonoScriptInput* input);

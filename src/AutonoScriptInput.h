@@ -21,11 +21,15 @@ namespace AutonoScript
 
       char* GetFile();
       char* GetOutputFile();
+      char* GetTeam();
+      int GetPosition();
       AutonoScriptModes GetMode();
 
       void SetMode(AutonoScriptModes mode);
       void SetFile(const char* file);
       void SetOutputFile(const char* file);
+      void SetTeam(const char* team);
+      void SetPosition(int position);
       AutonoScriptInput* Seal();
 
     private:
@@ -33,6 +37,8 @@ namespace AutonoScript
       char* _file;
       char* _outputFile;
       int _isSealed;
+      char* _team;
+      int _position;
 
       AutonoScriptModes _mode;
 

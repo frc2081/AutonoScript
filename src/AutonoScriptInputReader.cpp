@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include "AutonoScriptInputReader.h"
 
@@ -17,7 +19,7 @@ namespace AutonoScript
     char arg;
     AutonoScriptInput* input = new AutonoScriptInput();
 
-    while ((arg = getopt(argc, argv, ":f:o:h")) != -1)
+    while ((arg = getopt(argc, argv, ":f:o:t:p:h")) != -1)
       switch(arg)
       {
         case 'f':
@@ -26,6 +28,15 @@ namespace AutonoScript
 
         case 'o':
           input->SetOutputFile(optarg);
+          break;
+
+        case 't':
+          input->SetTeam(optarg);
+          break;
+
+        case 'p':
+          // TODO: Error handling.
+          input->SetPosition(atoi(optarg));
           break;
 
         case 'h':
@@ -53,5 +64,15 @@ namespace AutonoScript
     return input->GetFile() == NULL
       ? currentMode
       : ReadFromFile;
+  }
+
+  int AutonoScriptInputReader::PrintConsoleHelp()
+  {
+    printf("\nUsage: cmd -f FILE [-o FILE -t TEAM -p POSITION]\n");
+    printf("  -f FILE     : Specifies AutonoScript FILE.\n");
+    printf("  -o FILE     : Specifies image output FILE.\n");
+    printf("  -t TEAM     : Specifies starting TEAM.\n");
+    printf("  -p POSITION : Specifies starting POSITION.\n");
+    printf("  -h          : Prints help information.\n");
   }
 }

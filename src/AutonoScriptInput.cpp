@@ -8,8 +8,10 @@ namespace AutonoScript
   AutonoScriptInput::AutonoScriptInput()
   {
     _isSealed = false;
+    _position = 0;
     _mode = UnknownMode;
     _file = NULL;
+    _team = NULL;
     _outputFile = NULL;
   }
 
@@ -24,8 +26,13 @@ namespace AutonoScript
     if (_outputFile != NULL)
       free(_outputFile);
 
+    if (_team != NULL)
+      free(_team);
+
     _file = NULL;
     _outputFile = NULL;
+    _team = NULL;
+    _position = 0;
   }
 
   int AutonoScriptInput::IsValid()
@@ -41,6 +48,16 @@ namespace AutonoScript
   char* AutonoScriptInput::GetOutputFile()
   {
     return _outputFile;
+  }
+
+  char* AutonoScriptInput::GetTeam()
+  {
+    return _team;
+  }
+
+  int AutonoScriptInput::GetPosition()
+  {
+    return _position;
   }
 
   AutonoScriptModes AutonoScriptInput::GetMode()
@@ -62,6 +79,17 @@ namespace AutonoScript
   {
     SetStringInputValue(&_outputFile, outputFile);
   }
+
+  void AutonoScriptInput::SetTeam(const char* team)
+  {
+    SetStringInputValue(&_team, team);
+  }
+
+  void AutonoScriptInput::SetPosition(int position)
+  {
+    _position = position;
+  }
+
 
   AutonoScriptInput* AutonoScriptInput::Seal()
   {
