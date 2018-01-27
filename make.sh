@@ -17,6 +17,7 @@ SRC_FILES+=('AutonoScriptManager.cpp')
 SRC_FILES+=('FieldGenerator.cpp')
 SRC_FILES+=('FieldPositions.cpp')
 SRC_FILES+=('FieldDefinition.cpp')
+SRC_FILES+=('FacingRegulator.cpp')
 
 # Dynamic Variables
 BASE_DIR="$(dirname "${0}")"

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "FieldGenerator.h"
+#include "FacingRegulator.h"
 
 namespace AutonoScript
 {
@@ -25,6 +26,15 @@ namespace AutonoScript
 
   void FieldGenerator::GenerateFromFacing(FieldFacing* facing, RobotCommandCollection* commands, const char* outputFile)
   {
-    printf("Starting Position:\n  (%d, %d) [%f]\n", facing->GetXCoordinate(), facing->GetYCoordinate(), facing->GetFacing());
+    double tmp;
+    FacingRegulator* regulator = new FacingRegulator(facing->GetFacing());
+
+    tmp = regulator->GetAdjustedFacing(0);
+    tmp = regulator->GetAdjustedFacing(90);
+    tmp = regulator->GetAdjustedFacing(180);
+    tmp = regulator->GetAdjustedFacing(270);
+    tmp = regulator->GetAdjustedFacing(355);
+    
+    delete regulator;
   }
 }
