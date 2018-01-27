@@ -13,7 +13,10 @@ namespace AutonoScript
   {
     _scriptReader = new AutonoScriptReader();
     _inputReader = new AutonoScriptInputReader();
-    _fieldGenerator = new FieldGenerator();
+    
+    // TODO: Do this better.
+    _fieldDefinition = new FieldDefinition();
+    _fieldGenerator = new FieldGenerator(_fieldDefinition);
 
     _redRegex = new regex("^ *r(ed)? *$", icase);
     _blueRegex = new regex("^ *b(lue)? *$", icase);
@@ -26,6 +29,7 @@ namespace AutonoScript
     delete _fieldGenerator;
     delete _redRegex;
     delete _blueRegex;
+    delete _fieldDefinition;
   }
 
   // Public Methods
@@ -91,7 +95,7 @@ namespace AutonoScript
 
     
     _fieldGenerator->Generate(position, commands, outputFile);
-    return PrintRobotCommands(commands, input);
+    return 0;
   }
 
 
@@ -122,5 +126,4 @@ namespace AutonoScript
      position |= (BlueTeam << posVal);
      return (FieldPositions) position;
   }
-
 }

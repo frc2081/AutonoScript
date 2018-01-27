@@ -6,6 +6,7 @@
 #include "AutonoScriptInputReader.h"
 #include "FieldGenerator.h"
 #include "AutonoScriptInput.h"
+#include "FieldDefinition.h"
 
 namespace AutonoScript
 {
@@ -26,6 +27,7 @@ namespace AutonoScript
       AutonoScriptReader* _scriptReader;
       AutonoScriptInputReader* _inputReader;
       FieldGenerator* _fieldGenerator;
+      FieldDefinition* _fieldDefinition;
 
       std::regex* _redRegex;
       std::regex* _blueRegex;
