@@ -16,15 +16,15 @@ namespace AutonoScript
       bool IsInBounds(FieldPosition* position);
 
      private:
-      unsigned int _xLimit;
-      unsigned int _yLimit;
+      int _xLimit;
+      int _yLimit;
 
-      unsigned int _portalHeight;
-      unsigned int _exchangeHeight;
-      unsigned int _alianceStationHeight;
-      unsigned int _playerStationHeight;
+      int _portalHeight;
+      int _exchangeHeight;
+      int _alianceStationHeight;
+      int _playerStationHeight;
 
-      unsigned int _alianceStationWidth;
+      int _alianceStationWidth;
 
       FieldFacing* _red1;
       FieldFacing* _red2;
@@ -33,10 +33,10 @@ namespace AutonoScript
       FieldFacing* _blue2;
       FieldFacing* _blue3;
 
-      unsigned int GetStartingPositionXCoordinate(unsigned int position, bool inverted);
-      unsigned int GetStartingPositionYCoordinate(bool inverted);
+      int GetStartingPositionXCoordinate(int position, bool inverted);
+      int GetStartingPositionYCoordinate(bool inverted);
 
-      int GetRelativeValue(unsigned int value, bool inverted);
+      int GetRelativeValue(int value, bool inverted);
       void SetStartingFieldFacings();
   };
 }

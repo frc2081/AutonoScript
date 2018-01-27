@@ -26,21 +26,22 @@ namespace AutonoScript
   class FieldPosition
   {
     public:
-      FieldPosition(unsigned int xCoordinate, unsigned int yCoordinate);
+      FieldPosition(int xCoordinate, int yCoordinate);
 
-      unsigned int GetXCoordinate();
-      unsigned int GetYCoordinate();
+      int GetXCoordinate();
+      int GetYCoordinate();
 
     private:
-      unsigned int _xCoordinate;
-      unsigned int _yCoordinate;
+      int _xCoordinate;
+      int _yCoordinate;
   };
 
   class FieldFacing : public FieldPosition
   {
     public:
-      FieldFacing(unsigned int xCoordinate, unsigned int yCoordinate, double facing);
+      FieldFacing(int xCoordinate, int yCoordinate, double facing);
 
+      FieldFacing* Clone();
       double GetFacing();
 
     private:

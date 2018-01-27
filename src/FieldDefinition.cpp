@@ -74,7 +74,7 @@ namespace AutonoScript
 
   bool FieldDefinition::IsInBounds(FieldPosition* position)
   {
-    unsigned int x, y;
+    int x, y;
     x = position->GetXCoordinate();
     y = position->GetYCoordinate();
 
@@ -84,9 +84,9 @@ namespace AutonoScript
       && y <= _yLimit;
   }
 
-  unsigned int FieldDefinition::GetStartingPositionXCoordinate(unsigned int position, bool inverted)
+  int FieldDefinition::GetStartingPositionXCoordinate(int position, bool inverted)
   {
-    unsigned int height = inverted
+    int height = inverted
       ? _yLimit
       : 0;
 
@@ -101,14 +101,14 @@ namespace AutonoScript
     return height;
   }
 
-  unsigned int FieldDefinition::GetStartingPositionYCoordinate(bool inverted)
+  int FieldDefinition::GetStartingPositionYCoordinate(bool inverted)
   {
     return inverted
       ? _alianceStationWidth
       : _xLimit - _alianceStationWidth;
   }
 
-  int FieldDefinition::GetRelativeValue(unsigned int value, bool inverted)
+  int FieldDefinition::GetRelativeValue(int value, bool inverted)
   {
     return inverted
       ?  -1 * (int)value

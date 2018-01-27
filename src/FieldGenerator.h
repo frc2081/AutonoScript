@@ -4,6 +4,8 @@
 #include "RobotCommandCollection.h"
 #include "FieldPositions.h"
 #include "FieldDefinition.h"
+#include "FacingRegulator.h"
+#include "FacingPositionalEvaluator.h"
 
 namespace AutonoScript
 {
@@ -17,6 +19,11 @@ namespace AutonoScript
 
     private:
       FieldDefinition* _fieldDefinition;
+      FacingPositionalEvaluator* _facingEvaluator;
+
+      void GetNextFacing(FieldFacing* current, FacingRegulator* regulator, RobotCommand* command, FieldFacing** next);
+      void GetNextMoveFacing(FieldFacing* current, FacingRegulator* regulator, double magnitude, double moveFacing, FieldFacing** next);
+      void GetNextRotationFacing(FieldFacing* current, FacingRegulator* regulator, double magnitude, FieldFacing** next);
   };
 }
 

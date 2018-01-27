@@ -4,28 +4,33 @@ namespace AutonoScript
 {
 
   // Field Position
-  FieldPosition::FieldPosition(unsigned int xCoordinate, unsigned int yCoordinate)
+  FieldPosition::FieldPosition(int xCoordinate, int yCoordinate)
   {
     _xCoordinate = xCoordinate;
     _yCoordinate = yCoordinate;
   }
 
-  unsigned int FieldPosition::GetXCoordinate()
+  int FieldPosition::GetXCoordinate()
   {
     return _xCoordinate;
   }
 
-  unsigned int FieldPosition::GetYCoordinate()
+  int FieldPosition::GetYCoordinate()
   {
     return _yCoordinate;
   }
 
 
   // Field Facing
-  FieldFacing::FieldFacing(unsigned int xCoordinate, unsigned int yCoordinate, double facing)
+  FieldFacing::FieldFacing(int xCoordinate, int yCoordinate, double facing)
     : FieldPosition(xCoordinate, yCoordinate)
   {
     _facing = facing;
+  }
+
+  FieldFacing* FieldFacing::Clone()
+  {
+    return new FieldFacing(GetXCoordinate(), GetYCoordinate(), GetFacing());
   }
 
   double FieldFacing::GetFacing()
