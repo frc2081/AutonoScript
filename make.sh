@@ -19,6 +19,8 @@ SRC_FILES+=('FieldPositions.cpp')
 SRC_FILES+=('FieldDefinition.cpp')
 SRC_FILES+=('FacingRegulator.cpp')
 SRC_FILES+=('FacingPositionalEvaluator.cpp')
+SRC_FILES+=('FieldPath.cpp')
+SRC_FILES+=('FieldPathGenerator.cpp')
 
 # Dynamic Variables
 BASE_DIR="$(dirname "${0}")"
