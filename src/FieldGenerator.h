@@ -5,13 +5,14 @@
 #include "FieldPositions.h"
 #include "FieldDefinition.h"
 #include "FieldPathGenerator.h"
+#include "FieldOutputGenerator.h"
 
 namespace AutonoScript
 {
   class FieldGenerator
   {
     public:
-      FieldGenerator(FieldDefinition* fieldDefinition);
+      FieldGenerator(FieldDefinition* fieldDefinition, FieldOutputGenerator* io);
       virtual ~FieldGenerator();
       void Generate(FieldPositions position, RobotCommandCollection* commands, const char* outputFile);
       void GenerateFromFacing(FieldFacing* facing, RobotCommandCollection* commands, const char* outputFile);
@@ -19,6 +20,7 @@ namespace AutonoScript
     private:
       FieldDefinition* _fieldDefinition;
       FieldPathGenerator* _pathGenerator;
+      FieldOutputGenerator* _io;
   };
 }
 

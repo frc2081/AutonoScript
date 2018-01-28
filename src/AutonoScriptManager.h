@@ -26,7 +26,6 @@ namespace AutonoScript
 
       AutonoScriptReader* _scriptReader;
       AutonoScriptInputReader* _inputReader;
-      FieldGenerator* _fieldGenerator;
       FieldDefinition* _fieldDefinition;
 
       std::regex* _redRegex;

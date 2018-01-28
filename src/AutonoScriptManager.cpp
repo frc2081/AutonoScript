@@ -1,7 +1,8 @@
 #include <stdio.h>
 
-#include "AutonoScriptManager.h"
 #include "FieldGenerator.h"
+#include "AutonoScriptManager.h"
+#include "FieldConsoleOutputGenerator.h"
 
 namespace AutonoScript
 {
@@ -16,8 +17,6 @@ namespace AutonoScript
     
     // TODO: Do this better.
     _fieldDefinition = new FieldDefinition();
-    _fieldGenerator = new FieldGenerator(_fieldDefinition);
-
     _redRegex = new regex("^ *r(ed)? *$", icase);
     _blueRegex = new regex("^ *b(lue)? *$", icase);
   }
@@ -26,7 +25,6 @@ namespace AutonoScript
   {
     delete _scriptReader;
     delete _inputReader;
-    delete _fieldGenerator;
     delete _redRegex;
     delete _blueRegex;
     delete _fieldDefinition;
@@ -87,14 +85,23 @@ namespace AutonoScript
   {
     char* outputFile;
     FieldPositions position;
+    FieldGenerator* fieldGenerator;
+    FieldOutputGenerator* io;
+
     if ((position = GetFieldPosition(input)) == UnknownPosition)
       return ErrorOut("Uknown position.  Must specify with -t TEAM and -p POSITION.", 2);
 
     if ((outputFile = input->GetOutputFile()) == NULL)
       return ErrorOut("Must specify an output file with -o.", 3);
 
-    
-    _fieldGenerator->Generate(position, commands, outputFile);
+
+    io = new FieldConsoleOutputGenerator(_fieldDefinition);
+
+    fieldGenerator = new FieldGenerator(_fieldDefinition, io);
+    fieldGenerator->Generate(position, commands, outputFile);
+
+    delete io;
+    delete fieldGenerator;
     return 0;
   }
 

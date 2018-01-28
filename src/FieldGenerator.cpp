@@ -6,10 +6,11 @@ namespace AutonoScript
 {
 
   static inline void PrintFacing(FieldFacing* facing);
-  FieldGenerator::FieldGenerator(FieldDefinition* fieldDefinition)
+  FieldGenerator::FieldGenerator(FieldDefinition* fieldDefinition, FieldOutputGenerator* io)
   {
     _fieldDefinition = fieldDefinition;
     _pathGenerator = new FieldPathGenerator();
+    _io = io;
   }
 
   FieldGenerator::~FieldGenerator()
@@ -33,15 +34,6 @@ namespace AutonoScript
     path = _pathGenerator->GeneratePath(facing, commands);
     pointCount = path->GetPointCount();
 
-    for (int i=0; i<pointCount; i++)
-      PrintFacing(path->GetPoint(i));
-
-    delete path;
-  }
-
-
-  static inline void PrintFacing(FieldFacing* facing)
-  {
-    printf("Starting Position:\n  (%d, %d) [%f]\n", facing->GetXCoordinate(), facing->GetYCoordinate(), facing->GetFacing());
+    _io->GenerateOutput(path, outputFile);
   }
 }
