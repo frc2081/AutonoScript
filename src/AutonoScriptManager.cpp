@@ -4,6 +4,7 @@
 #include "AutonoScriptManager.h"
 #include "FieldConsoleOutputGenerator.h"
 #include "FieldCsvOutputGenerator.h"
+#include "FieldGraphicsOUtputGenerator.h"
 
 namespace AutonoScript
 {
@@ -22,6 +23,7 @@ namespace AutonoScript
     _blueRegex = new regex("^ *b(lue)? *$", icase);
     _csvRegex = new regex("^ *csv *$", icase);
     _consoleRegex = new regex("^ *con(sole)? *$");
+    _graphicsRegex = new regex("^ *(graph(ics)?|svg)? *$");
   }
 
   AutonoScriptManager::~AutonoScriptManager()
@@ -32,6 +34,7 @@ namespace AutonoScript
     delete _blueRegex;
     delete _csvRegex;
     delete _consoleRegex;
+    delete _graphicsRegex;
     delete _fieldDefinition;
   }
 
@@ -148,6 +151,9 @@ namespace AutonoScript
 
     if (regex_match(type, *_csvRegex))
       return new FieldCsvOutputGenerator(field);
+
+    if (regex_match(type, *_graphicsRegex))
+      return new FieldGraphicsOutputGenerator(field);
 
     return new DEFAULT_OUTPUT_GENERATOR(field);
   }
