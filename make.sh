@@ -11,6 +11,18 @@ SRC_FILES+=('AutonoscriptCommand.cpp')
 SRC_FILES+=('RobotCommand.cpp')
 SRC_FILES+=('AutonoscriptReader.cpp')
 SRC_FILES+=('RobotCommandCollection.cpp')
+SRC_FILES+=('AutonoScriptInput.cpp')
+SRC_FILES+=('AutonoScriptInputReader.cpp')
+SRC_FILES+=('AutonoScriptManager.cpp')
+SRC_FILES+=('FieldGenerator.cpp')
+SRC_FILES+=('FieldPositions.cpp')
+SRC_FILES+=('FieldDefinition.cpp')
+SRC_FILES+=('FacingRegulator.cpp')
+SRC_FILES+=('FacingPositionalEvaluator.cpp')
+SRC_FILES+=('FieldPath.cpp')
+SRC_FILES+=('FieldPathGenerator.cpp')
+SRC_FILES+=('FieldOutputGenerator.cpp')
+SRC_FILES+=('FieldConsoleOutputGenerator.cpp')
 
 # Dynamic Variables
 BASE_DIR="$(dirname "${0}")"
@@ -22,6 +34,7 @@ BUILD_CMD=("${COMPILER}")
 
 # Sets Debug
 BUILD_CMD+=(-g)
+BUILD_CMD+=(-std=c++11)
 
 # Adds Source Files
 for src_file in ${SRC_FILES[@]}; do

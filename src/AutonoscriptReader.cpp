@@ -1,6 +1,7 @@
 #include <string>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "AutonoscriptReader.h"
 
 using namespace std;
@@ -40,12 +41,12 @@ namespace AutonoScript
   {
 
     int position = 0;
-    double magnitude;
+    double magnitude, facing;
     RobotCommands command;
 
     RobotCommandCollection* commands = new RobotCommandCollection();
-    while (ReadCommand(script, &position, &command, &magnitude))
-      commands->AddRobotCommand(magnitude, command);
+    while (ReadCommand(script, &position, &command, &magnitude, &facing))
+      commands->AddRobotCommand(magnitude, command, facing);
 
     return commands;
   }
@@ -69,17 +70,25 @@ namespace AutonoScript
 
 
 #define EXTRACT_ROB_CMD_TOKEN(strVal) if (!(rtn = GetNextToken(script, position, &strVal))) return rtn;
-  int AutonoScriptReader::ReadCommand(const char* script, int* position, RobotCommands* command, double* magnitude)
+  int AutonoScriptReader::ReadCommand(const char* script, int* position, RobotCommands* command, double* magnitude, double* facing)
   {
     int rtn;
     char curr;
-    string cmdStr, magStr;
+    string cmdStr, magStr, faceStr;
 
     EXTRACT_ROB_CMD_TOKEN(cmdStr);
     EXTRACT_ROB_CMD_TOKEN(magStr);
 
+    *facing = 0;
     *magnitude = strtod(magStr.c_str(), NULL);
     *command = GetRobotCommand(&cmdStr);
+
+    // For now, only a move command has a real facing.
+    if (*command != Move)
+      return 1;
+
+    EXTRACT_ROB_CMD_TOKEN(faceStr);
+    *facing = strtod(faceStr.c_str(), NULL);
   }
 
   // Inline Functions
@@ -113,14 +122,16 @@ namespace AutonoScript
 
   static inline RobotCommands GetRobotCommand(string* cmdStr)
   {
-    if (cmdStr->compare("M"))
+    const char* cmdChr = cmdStr->c_str();
+
+    if (!strcmp(cmdChr, "M"))
       return Move;
 
-    if (cmdStr->compare("RC"))
+    if (!strcmp(cmdChr, "RC"))
       return RotateClockwise;
 
-    return (cmdStr->compare("RCC"))
-      ? RotateCounterClockwise
-      : UnknownCommand;
+    return (strcmp(cmdChr, "RCC"))
+      ? UnknownCommand
+      : RotateCounterClockwise;
   }
 }

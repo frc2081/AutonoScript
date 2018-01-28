@@ -14,13 +14,15 @@ namespace AutonoScript
   class RobotCommand
   {
     public:
-      RobotCommand(double magnitude, RobotCommands command);
+      RobotCommand(double magnitude, RobotCommands command, double facing);
       virtual ~RobotCommand();
 
+      double GetFacing();
       double GetMagnitude();
       RobotCommands GetCommand();
 
     private:
+      double _facing;
       double _magnitude;
       RobotCommands _command;
   };
