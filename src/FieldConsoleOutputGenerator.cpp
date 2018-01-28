@@ -16,7 +16,7 @@ namespace AutonoScript
     for(int i=0; i<pointCount; i++)
     {
       FieldFacing* facing = path->GetPoint(i);
-      printf("(%d, %d) [%f]\n", facing->GetXCoordinate(), facing->GetYCoordinate(), facing->GetFacing());
+      printf("(%d, %d) [%0.2f]\n", facing->GetXCoordinate(), facing->GetYCoordinate(), facing->GetFacing());
     }
   }
 }

@@ -13,6 +13,7 @@ namespace AutonoScript
     _file = NULL;
     _team = NULL;
     _outputFile = NULL;
+    _outputType = NULL;
   }
 
   AutonoScriptInput::~AutonoScriptInput()
@@ -28,6 +29,9 @@ namespace AutonoScript
 
     if (_team != NULL)
       free(_team);
+
+    if (_outputType != NULL)
+      free(_outputType);
 
     _file = NULL;
     _outputFile = NULL;
@@ -53,6 +57,11 @@ namespace AutonoScript
   char* AutonoScriptInput::GetTeam()
   {
     return _team;
+  }
+
+  char* AutonoScriptInput::GetOutputType()
+  {
+    return _outputType;
   }
 
   int AutonoScriptInput::GetPosition()
@@ -84,6 +93,12 @@ namespace AutonoScript
   {
     SetStringInputValue(&_team, team);
   }
+
+  void AutonoScriptInput::SetOutputType(const char* outputType)
+  {
+    SetStringInputValue(&_outputType, outputType);
+  }
+
 
   void AutonoScriptInput::SetPosition(int position)
   {

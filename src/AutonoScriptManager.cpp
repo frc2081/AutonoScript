@@ -3,6 +3,7 @@
 #include "FieldGenerator.h"
 #include "AutonoScriptManager.h"
 #include "FieldConsoleOutputGenerator.h"
+#include "FieldCsvOutputGenerator.h"
 
 namespace AutonoScript
 {
@@ -19,6 +20,8 @@ namespace AutonoScript
     _fieldDefinition = new FieldDefinition();
     _redRegex = new regex("^ *r(ed)? *$", icase);
     _blueRegex = new regex("^ *b(lue)? *$", icase);
+    _csvRegex = new regex("^ *csv *$", icase);
+    _consoleRegex = new regex("^ *con(sole)? *$");
   }
 
   AutonoScriptManager::~AutonoScriptManager()
@@ -27,6 +30,8 @@ namespace AutonoScript
     delete _inputReader;
     delete _redRegex;
     delete _blueRegex;
+    delete _csvRegex;
+    delete _consoleRegex;
     delete _fieldDefinition;
   }
 
@@ -95,7 +100,7 @@ namespace AutonoScript
       return ErrorOut("Must specify an output file with -o.", 3);
 
 
-    io = new FieldConsoleOutputGenerator(_fieldDefinition);
+    io = GetOutputGenerator(_fieldDefinition, input);
 
     fieldGenerator = new FieldGenerator(_fieldDefinition, io);
     fieldGenerator->Generate(position, commands, outputFile);
@@ -132,5 +137,18 @@ namespace AutonoScript
 
      position |= (BlueTeam << posVal);
      return (FieldPositions) position;
+  }
+
+#define DEFAULT_OUTPUT_GENERATOR(field_def) FieldConsoleOutputGenerator(field_def);
+  FieldOutputGenerator* AutonoScriptManager::GetOutputGenerator(FieldDefinition* field, AutonoScriptInput* input)
+  {
+    char* type;
+    if ((type = input->GetOutputType()) == NULL)
+      return new DEFAULT_OUTPUT_GENERATOR(field);
+
+    if (regex_match(type, *_csvRegex))
+      return new FieldCsvOutputGenerator(field);
+
+    return new DEFAULT_OUTPUT_GENERATOR(field);
   }
 }

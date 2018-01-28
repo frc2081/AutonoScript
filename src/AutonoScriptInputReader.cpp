@@ -19,7 +19,7 @@ namespace AutonoScript
     char arg;
     AutonoScriptInput* input = new AutonoScriptInput();
 
-    while ((arg = getopt(argc, argv, ":f:o:t:p:h")) != -1)
+    while ((arg = getopt(argc, argv, ":f:o:t:p:T:h")) != -1)
       switch(arg)
       {
         case 'f':
@@ -32,6 +32,10 @@ namespace AutonoScript
 
         case 't':
           input->SetTeam(optarg);
+          break;
+
+        case 'T':
+          input->SetOutputType(optarg);
           break;
 
         case 'p':
@@ -68,11 +72,12 @@ namespace AutonoScript
 
   int AutonoScriptInputReader::PrintConsoleHelp()
   {
-    printf("\nUsage: cmd -f FILE [-o FILE -t TEAM -p POSITION]\n");
-    printf("  -f FILE     : Specifies AutonoScript FILE.\n");
-    printf("  -o FILE     : Specifies image output FILE.\n");
-    printf("  -t TEAM     : Specifies starting TEAM.\n");
-    printf("  -p POSITION : Specifies starting POSITION.\n");
-    printf("  -h          : Prints help information.\n");
+    printf("\nUsage: cmd -f FILE [-o FILE -t TEAM -p POSITION [-T OUTPUT_TYPE]]\n");
+    printf("  -f FILE         : Specifies AutonoScript FILE.\n");
+    printf("  -o FILE         : Specifies image output FILE.\n");
+    printf("  -t TEAM         : Specifies starting TEAM.\n");
+    printf("  -p POSITION     : Specifies starting POSITION.\n");
+    printf("  -T OUTPUT_TYPE  : Specifies the OUTPUT_TYPE.\n");
+    printf("  -h              : Prints help information.\n");
   }
 }
