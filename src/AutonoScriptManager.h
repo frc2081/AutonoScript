@@ -7,6 +7,7 @@
 #include "FieldGenerator.h"
 #include "AutonoScriptInput.h"
 #include "FieldDefinition.h"
+#include "FieldConsoleOutputGenerator.h"
 
 namespace AutonoScript
 {
@@ -23,6 +24,7 @@ namespace AutonoScript
       int PrintRobotCommands(RobotCommandCollection* commands, AutonoScriptInput* input);
       int GenerateField(RobotCommandCollection* commands, AutonoScriptInput* input);
       FieldPositions GetFieldPosition(AutonoScriptInput* input);
+      FieldOutputGenerator* GetOutputGenerator(FieldDefinition* field, AutonoScriptInput* input);
 
       AutonoScriptReader* _scriptReader;
       AutonoScriptInputReader* _inputReader;
@@ -30,6 +32,8 @@ namespace AutonoScript
 
       std::regex* _redRegex;
       std::regex* _blueRegex;
+      std::regex* _csvRegex;
+      std::regex* _consoleRegex;
   };
 }
 

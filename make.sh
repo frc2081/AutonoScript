@@ -23,6 +23,7 @@ SRC_FILES+=('FieldPath.cpp')
 SRC_FILES+=('FieldPathGenerator.cpp')
 SRC_FILES+=('FieldOutputGenerator.cpp')
 SRC_FILES+=('FieldConsoleOutputGenerator.cpp')
+SRC_FILES+=('FieldCsvOutputGenerator.cpp')
 
 # Dynamic Variables
 BASE_DIR="$(dirname "${0}")"
