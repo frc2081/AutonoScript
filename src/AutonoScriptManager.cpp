@@ -22,8 +22,8 @@ namespace AutonoScript
     _redRegex = new regex("^ *r(ed)? *$", icase);
     _blueRegex = new regex("^ *b(lue)? *$", icase);
     _csvRegex = new regex("^ *csv *$", icase);
-    _consoleRegex = new regex("^ *con(sole)? *$");
-    _graphicsRegex = new regex("^ *(graph(ics)?|png)? *$");
+    _consoleRegex = new regex("^ *con(sole)? *$", icase);
+    _graphicsRegex = new regex("^ *(graph(ics)?|png)? *$", icase);
   }
 
   AutonoScriptManager::~AutonoScriptManager()

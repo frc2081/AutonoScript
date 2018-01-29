@@ -33,8 +33,8 @@ namespace AutonoScript
       FieldFacing* _blue2;
       FieldFacing* _blue3;
 
-      int GetStartingPositionXCoordinate(int position, bool inverted);
-      int GetStartingPositionYCoordinate(bool inverted);
+      int GetStartingPositionYCoordinate(int position, bool inverted);
+      int GetStartingPositionXCoordinate(bool inverted);
 
       int GetRelativeValue(int value, bool inverted);
       void SetStartingFieldFacings();

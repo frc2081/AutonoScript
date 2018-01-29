@@ -53,6 +53,7 @@ namespace AutonoScript
 		return cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
 	}
 
+#define GET_CAIRO_PATH_POINTS(curr_point) curr_point->GetXCoordinate(), curr_point->GetYCoordinate()
 	void FieldGraphicsOutputGenerator::DrawPath(cairo_t* cr, FieldPath* path)
   {
     int pointCount;
@@ -60,11 +61,12 @@ namespace AutonoScript
     FieldFacing* currentPoint;
     currentPoint = (*path)[0];
 
-    cairo_move_to(cr, currentPoint->GetYCoordinate(), currentPoint->GetXCoordinate());
+    cairo_move_to(cr, GET_CAIRO_PATH_POINTS(currentPoint));
+    pointCount = path->GetPointCount();
     for (int i=1; i<pointCount; i++)
     {
       currentPoint = path->GetPoint(i);
-      cairo_line_to(cr, currentPoint->GetYCoordinate(), currentPoint->GetXCoordinate());
+      cairo_line_to(cr, GET_CAIRO_PATH_POINTS(currentPoint));
     }
 
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
