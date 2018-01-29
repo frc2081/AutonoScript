@@ -172,6 +172,24 @@ namespace AutonoScript
     // Draw Red Zones
     cairo_rectangle(cr, boundLeftAutoLineX - (cubeZoneWidth / 2), boundCenterY - (cubeZoneHeight / 2), cubeZoneWidth, cubeZoneHeight);
     cairo_rectangle(cr, boundTopLeftX, boundTopLeftY + boundSlantHeight + playerStationHeight, exchangeZoneWidth, exchangeZoneHeight);
+    cairo_rectangle(cr, 0, boundTopLeftY + boundSlantHeight, boundTopLeftX, sideBoundHeight);
+
+    cairo_move_to(cr, boundTopLeftX + boundTotalWidth - boundSlantWidth, boundTopLeftY);
+    cairo_line_to(cr, boundTopLeftX + boundTotalWidth - boundSlantWidth, 0);
+    cairo_line_to(cr, maxWidth, 0);
+    cairo_line_to(cr, maxWidth, boundTopLeftY + boundSlantHeight);
+    cairo_line_to(cr, boundTopLeftX + boundTotalWidth, boundTopLeftY + boundSlantHeight);
+    cairo_close_path(cr);
+
+    cairo_move_to(cr, boundTopLeftX + boundTotalWidth - boundSlantWidth, boundTopLeftY + boundTotalHeight);
+    cairo_line_to(cr, boundTopLeftX + boundTotalWidth - boundSlantWidth, maxHeight);
+    cairo_line_to(cr, maxWidth, maxHeight);
+    cairo_line_to(cr, maxWidth, boundTopLeftY + boundSlantHeight + sideBoundHeight);
+    cairo_line_to(cr, boundTopLeftX + boundTotalWidth, boundTopLeftY + boundSlantHeight + sideBoundHeight);
+    cairo_close_path(cr);
+
+    cairo_set_source_rgba(cr, 0.6, 0.1, 0.1, 0.25);
+    cairo_fill_preserve(cr);
     cairo_set_source_rgb(cr, 0.6, 0.1, 0.1);
     cairo_set_line_width(cr, 4);
     cairo_stroke(cr);
@@ -179,6 +197,24 @@ namespace AutonoScript
     // Draw Blue Zones
     cairo_rectangle(cr, boundRightAutoLineX - (cubeZoneWidth / 2), boundCenterY - (cubeZoneHeight / 2), cubeZoneWidth, cubeZoneHeight);
     cairo_rectangle(cr, boundTopLeftX + boundTotalWidth - exchangeZoneWidth, boundTopLeftY + boundSlantHeight + (2 * playerStationHeight), exchangeZoneWidth, exchangeZoneHeight);
+    cairo_rectangle(cr, boundTopLeftX + boundTotalWidth, boundTopLeftY + boundSlantHeight, boundTopLeftX, sideBoundHeight);
+
+    cairo_move_to(cr, 0, 0);
+    cairo_line_to(cr, boundTopLeftX + boundSlantWidth, 0);
+    cairo_line_to(cr, boundTopLeftX + boundSlantWidth, boundTopLeftY);
+    cairo_line_to(cr, boundTopLeftX, boundTopLeftY + boundSlantHeight);
+    cairo_line_to(cr, 0, boundTopLeftY + boundSlantHeight);
+    cairo_close_path(cr);
+
+    cairo_move_to(cr, 0, maxHeight);
+    cairo_line_to(cr, boundTopLeftX + boundSlantWidth, maxHeight);
+    cairo_line_to(cr, boundTopLeftX + boundSlantWidth, boundTopLeftY + boundTotalHeight);
+    cairo_line_to(cr, boundTopLeftX, boundTopLeftY + boundSlantHeight + sideBoundHeight);
+    cairo_line_to(cr, 0, boundTopLeftY + boundSlantHeight + sideBoundHeight);
+    cairo_close_path(cr);
+
+    cairo_set_source_rgba(cr, 0.1, 0.1, 0.6, 0.25);
+    cairo_fill_preserve(cr);
     cairo_set_source_rgb(cr, 0.1, 0.1, 0.6);
     cairo_set_line_width(cr, 4);
     cairo_stroke(cr);
