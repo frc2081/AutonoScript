@@ -29,7 +29,7 @@ namespace AutonoScript
     DrawField(cr, topLeft, bottomRight);
 
     // Draw the path of the robot.
-    DrawPath(cr, path, topLeft);
+    DrawPath(cr, path, topLeft, bottomRight);
 
 
 		cairo_destroy (cr);
@@ -54,25 +54,35 @@ namespace AutonoScript
 	}
 
 #define GET_CAIRO_PATH_POINTS(curr_point, topY) curr_point->GetXCoordinate(), (topY - curr_point->GetYCoordinate())
-	void FieldGraphicsOutputGenerator::DrawPath(cairo_t* cr, FieldPath* path, FieldPosition* topLeft)
+	void FieldGraphicsOutputGenerator::DrawPath(cairo_t* cr, FieldPath* path, FieldPosition* topLeft, FieldPosition* bottomRight)
   {
-    int pointCount, topCoordinate;
+    bool isRed;
+    int pointCount, topMax, rightMax;
 
     FieldFacing* currentPoint;
     currentPoint = (*path)[0];
-    topCoordinate = topLeft->GetYCoordinate();
+    topMax = topLeft->GetYCoordinate();
+    rightMax = bottomRight->GetXCoordinate();
 
-    cairo_move_to(cr, GET_CAIRO_PATH_POINTS(currentPoint, topCoordinate));
+    isRed = currentPoint->GetXCoordinate() < (rightMax / 2);
+    cairo_move_to(cr, GET_CAIRO_PATH_POINTS(currentPoint, topMax));
     pointCount = path->GetPointCount();
     for (int i=1; i<pointCount; i++)
     {
       currentPoint = path->GetPoint(i);
-      cairo_line_to(cr, GET_CAIRO_PATH_POINTS(currentPoint, topCoordinate));
+      cairo_line_to(cr, GET_CAIRO_PATH_POINTS(currentPoint, topMax));
     }
 
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
-    cairo_set_source_rgba(cr, 1.0, 0, 0, 0.75);
-    cairo_set_line_width(cr, 4.0);
+
+    if (isRed)
+      // Red Team line.
+      cairo_set_source_rgba(cr, 1.0, 0, 0, 0.75);
+    else
+      // Blue team line.
+      cairo_set_source_rgba(cr, 0, 0, 1.0, 0.75);
+
+    cairo_set_line_width(cr, 6);
     cairo_stroke(cr);
   }
 
