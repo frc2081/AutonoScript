@@ -120,7 +120,12 @@ namespace AutonoScript
     int playerStationHeight, playerStationWidth;
     int playerStationTopLeftX, playerStationTopRightX;
     int playerStationDeskWidth;
-     
+    int platformZoneWidth, platformZoneHeight;
+    int scaleWidth, scaleHeight;
+    int scaleHeightOffset, scaleWidthOffset;
+    int platformHeight, platformWidth;
+    int platformHeightOffset, platformWidthOffset;
+    int innerPlatformWidth, innerPlatformHeight;
 
     maxHeight = topLeft->GetYCoordinate();
     maxWidth = bottomRight->GetXCoordinate();
@@ -136,7 +141,13 @@ namespace AutonoScript
     exchangeZoneHeight = 122;
     playerStationHeight = 183;
     playerStationWidth = 71;
-
+    platformZoneWidth = 0;
+    platformZoneHeight = 0;
+    scaleWidth = 142;
+    scaleHeightOffset = 217;
+    scaleWidthOffset = 356;
+    platformHeightOffset = 242;
+    platformWidthOffset = 664;
 
     topBoundWidth = boundTotalWidth - (2 * boundSlantWidth);
     boundTotalHeight = sideBoundHeight + (2 * boundSlantHeight);
@@ -153,6 +164,14 @@ namespace AutonoScript
     playerStationTopLeftX = boundTopLeftX - playerStationWidth;
     playerStationTopRightX = boundTopLeftX + boundTotalWidth + playerStationWidth;
     playerStationDeskWidth = playerStationWidth - 20;
+
+    scaleHeight = boundTotalHeight - (2 * scaleHeightOffset);
+    platformHeight = boundTotalHeight - (2 * platformHeightOffset);
+    platformWidth = boundTotalWidth - (2 * platformWidthOffset);
+
+    // TODO: Find the real metrics on this.
+    innerPlatformWidth = platformWidth * 0.8;
+    innerPlatformHeight = platformHeight * 0.8;
 
     // Draw lesser markings
     cairo_move_to(cr, 1, boundCenterY);
@@ -223,6 +242,16 @@ namespace AutonoScript
     cairo_set_source_rgba(cr, 0.1, 0.1, 0.6, 0.25);
     cairo_fill_preserve(cr);
     cairo_set_source_rgb(cr, 0.1, 0.1, 0.6);
+    cairo_set_line_width(cr, 4);
+    cairo_stroke(cr);
+
+    // Draw Scales and Platform
+    cairo_rectangle(cr, boundTopLeftX + scaleWidthOffset, boundTopLeftY + scaleHeightOffset, scaleWidth, scaleHeight);
+    cairo_rectangle(cr, boundTopLeftX + boundTotalWidth - (scaleWidthOffset + scaleWidth), boundTopLeftY + scaleHeightOffset, scaleWidth, scaleHeight);
+    cairo_rectangle(cr, boundTopLeftX + platformWidthOffset, boundTopLeftY + platformHeightOffset, platformWidth, platformHeight);
+    cairo_rectangle(cr, boundCenterX - (innerPlatformWidth / 2), boundCenterY - (innerPlatformHeight / 2), innerPlatformWidth, innerPlatformHeight);
+
+    cairo_set_source_rgb(cr, 0.1, 0.1, 0.1);
     cairo_set_line_width(cr, 4);
     cairo_stroke(cr);
 
