@@ -111,6 +111,8 @@ namespace AutonoScript
     int boundTotalHeight, boundTotalWidth;
     int boundCenterX, boundCenterY;
     int boundTopLeftX, boundTopLeftY;
+    int boundLeftAutoLineX, boundRightAutoLineX;
+    int cubeZoneWidth, cubeZoneHeight;
     int autoLineWidth;
      
 
@@ -122,6 +124,9 @@ namespace AutonoScript
     boundSlantWidth = 91;
     boundTotalWidth = 1646;
     autoLineWidth = 305;
+    cubeZoneWidth = 107;
+    cubeZoneHeight = 114;
+
 
     topBoundWidth = boundTotalWidth - (2 * boundSlantWidth);
     boundTotalHeight = sideBoundHeight + (2 * boundSlantHeight);
@@ -131,6 +136,9 @@ namespace AutonoScript
 
     boundTopLeftY = maxHeight - (boundCenterY + (boundTotalHeight / 2));
     boundTopLeftX = maxWidth - (boundCenterX + (boundTotalWidth / 2));
+
+    boundLeftAutoLineX = boundTopLeftX + autoLineWidth;
+    boundRightAutoLineX = boundTopLeftX + boundTotalWidth - autoLineWidth;
 
     // Draw lesser markings
     cairo_move_to(cr, 1, boundCenterY);
@@ -144,16 +152,27 @@ namespace AutonoScript
     cairo_stroke(cr);
 
     // Draw Autonomous Lines
-    cairo_move_to(cr, boundTopLeftX + autoLineWidth, boundTopLeftY);
-    cairo_line_to(cr, boundTopLeftX + autoLineWidth, boundTopLeftY + boundTotalHeight);
+    cairo_move_to(cr, boundLeftAutoLineX, boundTopLeftY);
+    cairo_line_to(cr, boundLeftAutoLineX, boundTopLeftY + boundTotalHeight);
 
-    cairo_move_to(cr, boundTopLeftX + boundTotalWidth - autoLineWidth, boundTopLeftY);
-    cairo_line_to(cr, boundTopLeftX + boundTotalWidth - autoLineWidth, boundTopLeftY + boundTotalHeight);
+    cairo_move_to(cr, boundRightAutoLineX, boundTopLeftY);
+    cairo_line_to(cr, boundRightAutoLineX, boundTopLeftY + boundTotalHeight);
 
     cairo_set_source_rgb(cr, 0.2, 0.2, 0.2);
     cairo_set_line_width(cr, 4);
     cairo_stroke(cr);
-    
+
+    // Draw Red Cube Zone
+    cairo_rectangle(cr, boundLeftAutoLineX - (cubeZoneWidth / 2), boundCenterY - (cubeZoneHeight / 2), cubeZoneWidth, cubeZoneHeight);
+    cairo_set_source_rgb(cr, 0.6, 0.1, 0.1);
+    cairo_set_line_width(cr, 4);
+    cairo_stroke(cr);
+
+    // Draw Blue Cube Zone
+    cairo_rectangle(cr, boundRightAutoLineX - (cubeZoneWidth / 2), boundCenterY - (cubeZoneHeight / 2), cubeZoneWidth, cubeZoneHeight);
+    cairo_set_source_rgb(cr, 0.1, 0.1, 0.6);
+    cairo_set_line_width(cr, 4);
+    cairo_stroke(cr);
 
     // Draw white bounds
     cairo_move_to(cr, boundTopLeftX,                                    boundTopLeftY + boundSlantHeight);
