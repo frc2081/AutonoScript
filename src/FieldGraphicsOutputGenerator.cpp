@@ -115,7 +115,9 @@ namespace AutonoScript
     int boundTopLeftX, boundTopLeftY;
     int boundLeftAutoLineX, boundRightAutoLineX;
     int cubeZoneWidth, cubeZoneHeight;
+    int exchangeZoneWidth, exchangeZoneHeight;
     int autoLineWidth;
+    int playerStationHeight;
      
 
     maxHeight = topLeft->GetYCoordinate();
@@ -128,6 +130,9 @@ namespace AutonoScript
     autoLineWidth = 305;
     cubeZoneWidth = 107;
     cubeZoneHeight = 114;
+    exchangeZoneWidth = 91;
+    exchangeZoneHeight = 122;
+    playerStationHeight = 183;
 
 
     topBoundWidth = boundTotalWidth - (2 * boundSlantWidth);
@@ -164,14 +169,16 @@ namespace AutonoScript
     cairo_set_line_width(cr, 4);
     cairo_stroke(cr);
 
-    // Draw Red Cube Zone
+    // Draw Red Zones
     cairo_rectangle(cr, boundLeftAutoLineX - (cubeZoneWidth / 2), boundCenterY - (cubeZoneHeight / 2), cubeZoneWidth, cubeZoneHeight);
+    cairo_rectangle(cr, boundTopLeftX, boundTopLeftY + boundSlantHeight + playerStationHeight, exchangeZoneWidth, exchangeZoneHeight);
     cairo_set_source_rgb(cr, 0.6, 0.1, 0.1);
     cairo_set_line_width(cr, 4);
     cairo_stroke(cr);
 
-    // Draw Blue Cube Zone
+    // Draw Blue Zones
     cairo_rectangle(cr, boundRightAutoLineX - (cubeZoneWidth / 2), boundCenterY - (cubeZoneHeight / 2), cubeZoneWidth, cubeZoneHeight);
+    cairo_rectangle(cr, boundTopLeftX + boundTotalWidth - exchangeZoneWidth, boundTopLeftY + boundSlantHeight + (2 * playerStationHeight), exchangeZoneWidth, exchangeZoneHeight);
     cairo_set_source_rgb(cr, 0.1, 0.1, 0.6);
     cairo_set_line_width(cr, 4);
     cairo_stroke(cr);
