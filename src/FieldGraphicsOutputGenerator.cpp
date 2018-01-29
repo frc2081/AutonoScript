@@ -29,7 +29,7 @@ namespace AutonoScript
     DrawField(cr, topLeft, bottomRight);
 
     // Draw the path of the robot.
-    DrawPath(cr, path);
+    DrawPath(cr, path, topLeft);
 
 
 		cairo_destroy (cr);
@@ -53,20 +53,21 @@ namespace AutonoScript
 		return cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
 	}
 
-#define GET_CAIRO_PATH_POINTS(curr_point) curr_point->GetXCoordinate(), curr_point->GetYCoordinate()
-	void FieldGraphicsOutputGenerator::DrawPath(cairo_t* cr, FieldPath* path)
+#define GET_CAIRO_PATH_POINTS(curr_point, topY) curr_point->GetXCoordinate(), (topY - curr_point->GetYCoordinate())
+	void FieldGraphicsOutputGenerator::DrawPath(cairo_t* cr, FieldPath* path, FieldPosition* topLeft)
   {
-    int pointCount;
+    int pointCount, topCoordinate;
 
     FieldFacing* currentPoint;
     currentPoint = (*path)[0];
+    topCoordinate = topLeft->GetYCoordinate();
 
-    cairo_move_to(cr, GET_CAIRO_PATH_POINTS(currentPoint));
+    cairo_move_to(cr, GET_CAIRO_PATH_POINTS(currentPoint, topCoordinate));
     pointCount = path->GetPointCount();
     for (int i=1; i<pointCount; i++)
     {
       currentPoint = path->GetPoint(i);
-      cairo_line_to(cr, GET_CAIRO_PATH_POINTS(currentPoint));
+      cairo_line_to(cr, GET_CAIRO_PATH_POINTS(currentPoint, topCoordinate));
     }
 
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);

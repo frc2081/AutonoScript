@@ -15,7 +15,7 @@ namespace AutonoScript
 		private:
       void DrawField(cairo_t* cr, FieldPosition* topLeft, FieldPosition* bottomRight);
       void DrawBounds(cairo_t* cr, FieldPosition* topLeft, FieldPosition* bottomRight);
-			void DrawPath(cairo_t* cr, FieldPath* path);
+			void DrawPath(cairo_t* cr, FieldPath* path, FieldPosition* topLeft);
 			cairo_surface_t* BuildSurface(FieldPosition* topLeft, FieldPosition* bottomRight);
   };
 }
