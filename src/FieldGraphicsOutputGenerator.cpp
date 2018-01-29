@@ -111,6 +111,7 @@ namespace AutonoScript
     int boundTotalHeight, boundTotalWidth;
     int boundCenterX, boundCenterY;
     int boundTopLeftX, boundTopLeftY;
+    int autoLineWidth;
      
 
     maxHeight = topLeft->GetYCoordinate();
@@ -120,6 +121,7 @@ namespace AutonoScript
     boundSlantHeight = 74;
     boundSlantWidth = 91;
     boundTotalWidth = 1646;
+    autoLineWidth = 305;
 
     topBoundWidth = boundTotalWidth - (2 * boundSlantWidth);
     boundTotalHeight = sideBoundHeight + (2 * boundSlantHeight);
@@ -129,6 +131,29 @@ namespace AutonoScript
 
     boundTopLeftY = maxHeight - (boundCenterY + (boundTotalHeight / 2));
     boundTopLeftX = maxWidth - (boundCenterX + (boundTotalWidth / 2));
+
+    // Draw lesser markings
+    cairo_move_to(cr, 1, boundCenterY);
+    cairo_line_to(cr, maxWidth - 1, boundCenterY);
+
+    cairo_move_to(cr, boundCenterX, 0);
+    cairo_line_to(cr, boundCenterX, maxHeight);
+
+    cairo_set_source_rgb(cr, 0.3, 0.3, 0.3);
+    cairo_set_line_width(cr, 2);
+    cairo_stroke(cr);
+
+    // Draw Autonomous Lines
+    cairo_move_to(cr, boundTopLeftX + autoLineWidth, boundTopLeftY);
+    cairo_line_to(cr, boundTopLeftX + autoLineWidth, boundTopLeftY + boundTotalHeight);
+
+    cairo_move_to(cr, boundTopLeftX + boundTotalWidth - autoLineWidth, boundTopLeftY);
+    cairo_line_to(cr, boundTopLeftX + boundTotalWidth - autoLineWidth, boundTopLeftY + boundTotalHeight);
+
+    cairo_set_source_rgb(cr, 0.2, 0.2, 0.2);
+    cairo_set_line_width(cr, 4);
+    cairo_stroke(cr);
+    
 
     // Draw white bounds
     cairo_move_to(cr, boundTopLeftX,                                    boundTopLeftY + boundSlantHeight);
