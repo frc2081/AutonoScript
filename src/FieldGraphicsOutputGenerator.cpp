@@ -106,12 +106,14 @@ namespace AutonoScript
     maxHeight = topLeft->GetYCoordinate();
     maxWidth = bottomRight->GetXCoordinate();
 
-    topBoundWidth = 1646;
     sideBoundHeight = 670;
-    boundSlantHeight = boundSlantWidth = 53;
+    boundSlantHeight = 74;
+    boundSlantWidth = 91;
+    boundTotalWidth = 1646;
 
+    topBoundWidth = boundTotalWidth - (2 * boundSlantWidth);
     boundTotalHeight = sideBoundHeight + (2 * boundSlantHeight);
-    boundTotalWidth = topBoundWidth + (2 * boundSlantWidth);
+
     boundCenterX = maxWidth / 2;
     boundCenterY = maxHeight / 2;
 
