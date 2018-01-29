@@ -58,6 +58,7 @@ namespace AutonoScript
   {
     bool isRed;
     int pointCount, topMax, rightMax;
+    double dashes[] = { 20, 20 };
 
     FieldFacing* currentPoint;
     currentPoint = (*path)[0];
@@ -77,11 +78,12 @@ namespace AutonoScript
 
     if (isRed)
       // Red Team line.
-      cairo_set_source_rgba(cr, 1.0, 0, 0, 0.75);
+      cairo_set_source_rgba(cr, 0.8, 0, 0, 0.75);
     else
       // Blue team line.
       cairo_set_source_rgba(cr, 0, 0, 1.0, 0.75);
 
+    cairo_set_dash(cr, dashes, 2, -10);
     cairo_set_line_width(cr, 6);
     cairo_stroke(cr);
   }
