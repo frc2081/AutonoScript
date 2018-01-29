@@ -14,6 +14,9 @@ namespace AutonoScript
 
       virtual void GenerateOutput(FieldPath* path, const char* outputFile) = 0;
 
+    protected:
+      FieldDefinition* GetField();
+
     private:
       FieldDefinition* _field;
   };

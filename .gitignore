@@ -1,4 +1,6 @@
 *.swp
 *.csv
+*.png
+*.svg
 *.stackdump
 bin/*

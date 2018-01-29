@@ -12,4 +12,10 @@ namespace AutonoScript
   {
     _field = NULL;
   }
+
+  FieldDefinition* FieldOutputGenerator::GetField()
+  {
+    return _field;
+  }
+
 }
