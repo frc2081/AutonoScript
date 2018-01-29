@@ -117,7 +117,9 @@ namespace AutonoScript
     int cubeZoneWidth, cubeZoneHeight;
     int exchangeZoneWidth, exchangeZoneHeight;
     int autoLineWidth;
-    int playerStationHeight;
+    int playerStationHeight, playerStationWidth;
+    int playerStationTopLeftX, playerStationTopRightX;
+    int playerStationDeskWidth;
      
 
     maxHeight = topLeft->GetYCoordinate();
@@ -133,6 +135,7 @@ namespace AutonoScript
     exchangeZoneWidth = 91;
     exchangeZoneHeight = 122;
     playerStationHeight = 183;
+    playerStationWidth = 71;
 
 
     topBoundWidth = boundTotalWidth - (2 * boundSlantWidth);
@@ -146,6 +149,10 @@ namespace AutonoScript
 
     boundLeftAutoLineX = boundTopLeftX + autoLineWidth;
     boundRightAutoLineX = boundTopLeftX + boundTotalWidth - autoLineWidth;
+
+    playerStationTopLeftX = boundTopLeftX - playerStationWidth;
+    playerStationTopRightX = boundTopLeftX + boundTotalWidth + playerStationWidth;
+    playerStationDeskWidth = playerStationWidth - 20;
 
     // Draw lesser markings
     cairo_move_to(cr, 1, boundCenterY);
@@ -219,6 +226,14 @@ namespace AutonoScript
     cairo_set_line_width(cr, 4);
     cairo_stroke(cr);
 
+    // Draw Desks
+    cairo_rectangle(cr, boundTopLeftX - playerStationDeskWidth, boundTopLeftY + boundSlantHeight, playerStationDeskWidth, playerStationHeight);
+    cairo_rectangle(cr, boundTopLeftX - playerStationDeskWidth, boundTopLeftY + sideBoundHeight + boundSlantHeight - (2 * playerStationHeight), playerStationDeskWidth, (2 * playerStationHeight));
+    cairo_rectangle(cr, boundTopLeftX + boundTotalWidth, boundTopLeftY + boundSlantHeight, playerStationDeskWidth, (2 * playerStationHeight));
+    cairo_rectangle(cr, boundTopLeftX + boundTotalWidth, boundTopLeftY + boundTotalHeight - boundSlantHeight - playerStationHeight, playerStationDeskWidth, playerStationHeight);
+    cairo_set_source_rgb(cr, .8, .8, .8);
+    cairo_fill(cr);
+
     // Draw white bounds
     cairo_move_to(cr, boundTopLeftX,                                    boundTopLeftY + boundSlantHeight);
     cairo_line_to(cr, boundTopLeftX,                                    boundTopLeftY + sideBoundHeight + boundSlantHeight);
@@ -230,8 +245,39 @@ namespace AutonoScript
     cairo_line_to(cr, boundTopLeftX + boundSlantWidth,                  boundTopLeftY);
     cairo_close_path(cr);
 
+    cairo_move_to(cr, playerStationTopLeftX, boundTopLeftY + boundSlantHeight);
+    cairo_line_to(cr, boundTopLeftX, boundTopLeftY + boundSlantHeight);
+
+    cairo_move_to(cr, playerStationTopLeftX, boundTopLeftY + boundSlantHeight + playerStationHeight);
+    cairo_line_to(cr, boundTopLeftX, boundTopLeftY + boundSlantHeight + playerStationHeight);
+
+    cairo_move_to(cr, playerStationTopLeftX, boundTopLeftY + boundSlantHeight + playerStationHeight + exchangeZoneHeight);
+    cairo_line_to(cr, boundTopLeftX, boundTopLeftY + boundSlantHeight + playerStationHeight + exchangeZoneHeight);
+
+    cairo_move_to(cr, playerStationTopLeftX, boundTopLeftY + boundTotalHeight - boundSlantHeight - playerStationHeight);
+    cairo_line_to(cr, boundTopLeftX, boundTopLeftY + boundTotalHeight - boundSlantHeight - playerStationHeight);
+
+    cairo_move_to(cr, playerStationTopLeftX, boundTopLeftY + sideBoundHeight + boundSlantHeight);
+    cairo_line_to(cr, boundTopLeftX, boundTopLeftY + sideBoundHeight + boundSlantHeight);
+
+    cairo_move_to(cr, playerStationTopRightX, boundTopLeftY + boundSlantHeight);
+    cairo_line_to(cr, boundTopLeftX + boundTotalWidth, boundTopLeftY + boundSlantHeight);
+
+    cairo_move_to(cr, playerStationTopRightX, boundTopLeftY + boundSlantHeight + playerStationHeight);
+    cairo_line_to(cr, boundTopLeftX + boundTotalWidth, boundTopLeftY + boundSlantHeight + playerStationHeight);
+
+    cairo_move_to(cr, playerStationTopRightX, boundTopLeftY + boundSlantHeight + (playerStationHeight * 2));
+    cairo_line_to(cr, boundTopLeftX + boundTotalWidth, boundTopLeftY + boundSlantHeight + (playerStationHeight * 2));
+
+    cairo_move_to(cr, playerStationTopRightX, boundTopLeftY + boundTotalHeight - boundSlantHeight - playerStationHeight);
+    cairo_line_to(cr, boundTopLeftX + boundTotalWidth, boundTopLeftY + boundTotalHeight - boundSlantHeight - playerStationHeight);
+
+    cairo_move_to(cr, playerStationTopRightX, boundTopLeftY + sideBoundHeight + boundSlantHeight);
+    cairo_line_to(cr, boundTopLeftX + boundTotalWidth, boundTopLeftY + sideBoundHeight + boundSlantHeight);
+
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_source_rgb(cr, 1, 1, 1);
-    cairo_set_line_width(cr, 3);
+    cairo_set_line_width(cr, 4);
     cairo_stroke(cr);
   }
 }
