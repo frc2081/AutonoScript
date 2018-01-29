@@ -42,10 +42,11 @@ namespace AutonoScript
   int AutonoScriptManager::Run(int argc, char** argv)
   {
     int rtn;
-    char* inputFile;
+    char* inputFile, *inputScript;
     AutonoScriptModes mode;
     AutonoScriptInput* input;
     RobotCommandCollection* commands;
+
 
     // Read input from command line.
     input = _inputReader->Read(argc, argv);
@@ -58,16 +59,20 @@ namespace AutonoScript
     }
 
     // Validate that input file is specified.
-    if (mode == UnknownMode || (inputFile = input->GetFile()) == NULL)
-      return ErrorOut("Must specify an input file with -f.", 1);
-
+    inputFile = inputScript = NULL;
+    if (mode == UnknownMode || ((inputFile = input->GetFile()) == NULL && (inputScript = input->GetScript()) == NULL))
+      return ErrorOut("Must specify an input file with -f or provide script with -S.", 1);
 
     // Read the input file.
-    commands = _scriptReader->ReadScriptFile(input->GetFile());
+    
+    commands = ((inputScript != NULL)
+      ? _scriptReader->ReadScript(input->GetScript())
+      :  _scriptReader->ReadScriptFile(input->GetFile()));
 
     switch(mode)
     {
       case ReadFromFile:
+      case ReadFromScript:
         rtn = PrintRobotCommands(commands, input);
         break;
 

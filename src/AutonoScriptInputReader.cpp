@@ -19,11 +19,15 @@ namespace AutonoScript
     char arg;
     AutonoScriptInput* input = new AutonoScriptInput();
 
-    while ((arg = getopt(argc, argv, ":f:o:t:p:T:h")) != -1)
+    while ((arg = getopt(argc, argv, ":f:S:o:t:p:T:h")) != -1)
       switch(arg)
       {
         case 'f':
           input->SetFile(optarg);
+          break;
+
+        case 'S':
+          input->SetScript(optarg);
           break;
 
         case 'o':
@@ -65,6 +69,9 @@ namespace AutonoScript
       return GenerateImage;
 
 
+    if (input->GetScript() != NULL)
+      return ReadFromScript;
+
     return input->GetFile() == NULL
       ? currentMode
       : ReadFromFile;
@@ -72,8 +79,9 @@ namespace AutonoScript
 
   int AutonoScriptInputReader::PrintConsoleHelp()
   {
-    printf("\nUsage: cmd -f FILE [-o FILE -t TEAM -p POSITION [-T OUTPUT_TYPE]]\n");
+    printf("\nUsage: cmd (-f FILE | -S SCRIPT) [-o FILE -t TEAM -p POSITION [-T OUTPUT_TYPE]]\n");
     printf("  -f FILE         : Specifies AutonoScript FILE.\n");
+    printf("  -S SCRIPT       : Provided SCRIPT contents to run.\n");
     printf("  -o FILE         : Specifies image output FILE.\n");
     printf("  -t TEAM         : Specifies starting TEAM.\n");
     printf("  -p POSITION     : Specifies starting POSITION.\n");
