@@ -105,7 +105,7 @@ namespace AutonoScript
     while (IsTokenChar(GET_NEXT_TOKEN_CHAR))
       *token += current;
 
-    return current != 0x0;
+    return true;
   }
   
   static inline int IsTokenChar(const char character)

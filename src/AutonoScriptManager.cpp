@@ -4,6 +4,7 @@
 #include "AutonoScriptManager.h"
 #include "FieldConsoleOutputGenerator.h"
 #include "FieldCsvOutputGenerator.h"
+#include "FieldGraphicsOUtputGenerator.h"
 
 namespace AutonoScript
 {
@@ -21,7 +22,8 @@ namespace AutonoScript
     _redRegex = new regex("^ *r(ed)? *$", icase);
     _blueRegex = new regex("^ *b(lue)? *$", icase);
     _csvRegex = new regex("^ *csv *$", icase);
-    _consoleRegex = new regex("^ *con(sole)? *$");
+    _consoleRegex = new regex("^ *con(sole)? *$", icase);
+    _graphicsRegex = new regex("^ *(graph(ics)?|png)? *$", icase);
   }
 
   AutonoScriptManager::~AutonoScriptManager()
@@ -32,6 +34,7 @@ namespace AutonoScript
     delete _blueRegex;
     delete _csvRegex;
     delete _consoleRegex;
+    delete _graphicsRegex;
     delete _fieldDefinition;
   }
 
@@ -39,10 +42,11 @@ namespace AutonoScript
   int AutonoScriptManager::Run(int argc, char** argv)
   {
     int rtn;
-    char* inputFile;
+    char* inputFile, *inputScript;
     AutonoScriptModes mode;
     AutonoScriptInput* input;
     RobotCommandCollection* commands;
+
 
     // Read input from command line.
     input = _inputReader->Read(argc, argv);
@@ -55,16 +59,20 @@ namespace AutonoScript
     }
 
     // Validate that input file is specified.
-    if (mode == UnknownMode || (inputFile = input->GetFile()) == NULL)
-      return ErrorOut("Must specify an input file with -f.", 1);
-
+    inputFile = inputScript = NULL;
+    if (mode == UnknownMode || ((inputFile = input->GetFile()) == NULL && (inputScript = input->GetScript()) == NULL))
+      return ErrorOut("Must specify an input file with -f or provide script with -S.", 1);
 
     // Read the input file.
-    commands = _scriptReader->ReadScriptFile(input->GetFile());
+    
+    commands = ((inputScript != NULL)
+      ? _scriptReader->ReadScript(input->GetScript())
+      :  _scriptReader->ReadScriptFile(input->GetFile()));
 
     switch(mode)
     {
       case ReadFromFile:
+      case ReadFromScript:
         rtn = PrintRobotCommands(commands, input);
         break;
 
@@ -148,6 +156,9 @@ namespace AutonoScript
 
     if (regex_match(type, *_csvRegex))
       return new FieldCsvOutputGenerator(field);
+
+    if (regex_match(type, *_graphicsRegex))
+      return new FieldGraphicsOutputGenerator(field);
 
     return new DEFAULT_OUTPUT_GENERATOR(field);
   }

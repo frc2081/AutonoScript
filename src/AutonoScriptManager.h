@@ -34,6 +34,7 @@ namespace AutonoScript
       std::regex* _blueRegex;
       std::regex* _csvRegex;
       std::regex* _consoleRegex;
+      std::regex* _graphicsRegex;
   };
 }
 

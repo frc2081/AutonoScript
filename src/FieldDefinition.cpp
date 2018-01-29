@@ -84,7 +84,7 @@ namespace AutonoScript
       && y <= _yLimit;
   }
 
-  int FieldDefinition::GetStartingPositionXCoordinate(int position, bool inverted)
+  int FieldDefinition::GetStartingPositionYCoordinate(int position, bool inverted)
   {
     int height = inverted
       ? _yLimit
@@ -101,7 +101,7 @@ namespace AutonoScript
     return height;
   }
 
-  int FieldDefinition::GetStartingPositionYCoordinate(bool inverted)
+  int FieldDefinition::GetStartingPositionXCoordinate(bool inverted)
   {
     return inverted
       ? _alianceStationWidth
@@ -115,7 +115,7 @@ namespace AutonoScript
       : (int) value;
   }
 
-#define CreateFacing(position, inverted, facing) new FieldFacing(GetStartingPositionXCoordinate(position, inverted), GetStartingPositionYCoordinate(inverted), facing);
+#define CreateFacing(position, inverted, facing) new FieldFacing(GetStartingPositionXCoordinate(inverted), GetStartingPositionYCoordinate(position, inverted), facing);
   void FieldDefinition::SetStartingFieldFacings()
   {
     double redFacing = 90;
