@@ -7,13 +7,11 @@ namespace AutonoScript
   FacingRegulator::FacingRegulator(double initialGyroFacing)
   {
     _initialGyroFacing = initialGyroFacing;
-    _currentRobotFacing = 0;
   }
 
   FacingRegulator::~FacingRegulator()
   {
     _initialGyroFacing = 0;
-    _currentRobotFacing = 0;
   }
 
   double FacingRegulator::GetAdjustedFacing(double facing)
@@ -21,14 +19,13 @@ namespace AutonoScript
     return GetFacingValue(facing + _initialGyroFacing);
   }
 
-  double FacingRegulator::ChangeRobotFacing(double ammount)
-  {
-    _currentRobotFacing = GetFacingValue(_currentRobotFacing + ammount);
-  }
-
   double FacingRegulator::GetFacingValue(double value)
   {
-    return abs(fmod(value, 360));
+    double val;
+
+    return (val = fmod(value, 360)) >= 0
+      ? val
+      : 360 + val;
   }
 
 }

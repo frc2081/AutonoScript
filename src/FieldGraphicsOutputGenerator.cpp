@@ -1,5 +1,8 @@
+#include <math.h>
 #include <cairo.h>
 #include "FieldGraphicsOutputGenerator.h"
+
+#define PI 3.14159265359
 
 using namespace std;
 
@@ -31,7 +34,6 @@ namespace AutonoScript
     // Draw the path of the robot.
     DrawPath(cr, path, topLeft, bottomRight);
 
-
 		cairo_destroy (cr);
 		cairo_surface_write_to_png (surface, outputFile);
 		cairo_surface_destroy (surface);
@@ -54,6 +56,12 @@ namespace AutonoScript
 	}
 
 #define GET_CAIRO_PATH_POINTS(curr_point, topY) curr_point->GetXCoordinate(), (topY - curr_point->GetYCoordinate())
+#define SET_TEAM_COLOR(bool_isRed)                  \
+    if (isRed)                                      \
+      cairo_set_source_rgba(cr, 0.8, 0, 0, 0.75);   \
+    else                                            \
+      cairo_set_source_rgba(cr, 0, 0, 1.0, 0.75);
+
 	void FieldGraphicsOutputGenerator::DrawPath(cairo_t* cr, FieldPath* path, FieldPosition* topLeft, FieldPosition* bottomRight)
   {
     bool isRed;
@@ -75,17 +83,14 @@ namespace AutonoScript
     }
 
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
-
-    if (isRed)
-      // Red Team line.
-      cairo_set_source_rgba(cr, 0.8, 0, 0, 0.75);
-    else
-      // Blue team line.
-      cairo_set_source_rgba(cr, 0, 0, 1.0, 0.75);
+    SET_TEAM_COLOR(isRed);
 
     cairo_set_dash(cr, dashes, 2, -10);
     cairo_set_line_width(cr, 6);
     cairo_stroke(cr);
+
+    // Draw the robot.
+    DrawRobot(cr, (*path)[path->GetPointCount() -1], topLeft, bottomRight, isRed);
   }
 
   void FieldGraphicsOutputGenerator::DrawField(cairo_t* cr, FieldPosition* topLeft, FieldPosition* bottomRight)
@@ -323,6 +328,37 @@ namespace AutonoScript
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_source_rgb(cr, 1, 1, 1);
     cairo_set_line_width(cr, 4);
+    cairo_stroke(cr);
+  }
+
+  void FieldGraphicsOutputGenerator::DrawRobot(cairo_t* cr, FieldFacing* vector, FieldPosition* topLeft, FieldPosition* bottomRight, bool isRed)
+  {
+    int robotSize;
+    int xCoordinate, yCoordinate;
+    int arrowX, arrowY, arrowLength;
+    double facing;
+
+    robotSize = 30;
+    arrowLength = 45;
+
+    // Draw the Robot
+    xCoordinate = vector->GetXCoordinate();
+    yCoordinate = topLeft->GetYCoordinate() - vector->GetYCoordinate();
+    facing = vector->GetFacing() * PI / 180;
+    arrowX = sin(facing) * arrowLength;
+    arrowY = cos(facing) * arrowLength;
+
+    cairo_arc(cr, xCoordinate, yCoordinate, robotSize, 0, 2 * PI);
+    SET_TEAM_COLOR(isRed);
+
+    cairo_set_dash(cr, 0, 0, 0);
+    cairo_fill_preserve(cr);
+    cairo_stroke(cr);
+
+    // Draw the facing
+    cairo_move_to(cr, xCoordinate, yCoordinate);
+    cairo_line_to(cr, xCoordinate + arrowX, yCoordinate - arrowY);
+    cairo_set_source_rgb(cr, 0, 0, 0);
     cairo_stroke(cr);
   }
 }

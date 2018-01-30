@@ -10,13 +10,11 @@ namespace AutonoScript
       virtual ~FacingRegulator();
 
       double GetAdjustedFacing(double facing);
-      double ChangeRobotFacing(double ammount);
+      double GetFacingValue(double value);
 
     private:
       double _initialGyroFacing;
-      double _currentRobotFacing;
 
-      double GetFacingValue(double value);
   };
 }
 
