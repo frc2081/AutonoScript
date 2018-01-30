@@ -266,9 +266,11 @@ namespace AutonoScript
     cairo_set_line_width(cr, 4);
     cairo_stroke(cr);
 
-    // Draw Scales and Platform
-    cairo_rectangle(cr, boundTopLeftX + scaleWidthOffset, boundTopLeftY + scaleHeightOffset, scaleWidth, scaleHeight);
-    cairo_rectangle(cr, boundTopLeftX + boundTotalWidth - (scaleWidthOffset + scaleWidth), boundTopLeftY + scaleHeightOffset, scaleWidth, scaleHeight);
+    // Draw Scales
+    DrawScales(cr, boundTopLeftX + scaleWidthOffset, boundTopLeftY + scaleHeightOffset, scaleWidth, scaleHeight);
+    DrawScales(cr, boundTopLeftX + boundTotalWidth - (scaleWidthOffset + scaleWidth), boundTopLeftY + scaleHeightOffset, scaleWidth, scaleHeight);
+
+    // Draw platforms
     cairo_rectangle(cr, boundTopLeftX + platformWidthOffset, boundTopLeftY + platformHeightOffset, platformWidth, platformHeight);
     cairo_rectangle(cr, boundCenterX - (innerPlatformWidth / 2), boundCenterY - (innerPlatformHeight / 2), innerPlatformWidth, innerPlatformHeight);
 
@@ -359,6 +361,47 @@ namespace AutonoScript
     cairo_move_to(cr, xCoordinate, yCoordinate);
     cairo_line_to(cr, xCoordinate + arrowX, yCoordinate - arrowY);
     cairo_set_source_rgb(cr, 0, 0, 0);
+    cairo_stroke(cr);
+  }
+
+  void FieldGraphicsOutputGenerator::DrawScales(cairo_t* cr, int xAxis, int yAxis, int width, int height)
+  {
+    int scalePadding;
+    int topScaleX, topScaleY;
+    int bottomScaleX, bottomScaleY;
+    int scaleWidth, scaleHeight;
+    int armWidth, armHeight, leftArmX, leftArmY;
+    int rightArmX, rightArmY, armOverlap, armsPerWidth;
+
+    scaleWidth = 122;
+    scaleHeight = 91;
+    armOverlap = 5;
+    armsPerWidth = 8;
+
+    scalePadding = (width - scaleWidth) / 2;
+    topScaleX = xAxis + scalePadding;
+    topScaleY = yAxis + scalePadding;
+
+    bottomScaleX = topScaleX;
+    bottomScaleY = yAxis + height - scalePadding - scaleHeight;
+
+    armWidth = width / armsPerWidth;
+    armHeight = height - (2 * scalePadding) - (2 * scaleHeight) + (2 * armOverlap);
+    leftArmY = rightArmY = yAxis + scalePadding + scaleHeight - armOverlap;
+    leftArmX = xAxis + scalePadding + (scaleWidth / 2) - (2 * armWidth);
+    rightArmX = leftArmX + (3 * armWidth);
+
+    cairo_rectangle(cr, topScaleX, topScaleY, scaleWidth, scaleHeight);
+    cairo_rectangle(cr, bottomScaleX, bottomScaleY, scaleWidth, scaleHeight);
+    cairo_rectangle(cr, leftArmX, leftArmY, armWidth, armHeight);
+    cairo_rectangle(cr, rightArmX, rightArmY, armWidth, armHeight);
+
+    cairo_set_source_rgb(cr, 0.3, 0.3, 0.3);
+    cairo_fill_preserve(cr);
+
+    cairo_rectangle(cr, xAxis, yAxis, width, height);
+    cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
+    cairo_set_line_width(cr, 4);
     cairo_stroke(cr);
   }
 }
