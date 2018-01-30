@@ -271,12 +271,8 @@ namespace AutonoScript
     DrawScales(cr, boundTopLeftX + boundTotalWidth - (scaleWidthOffset + scaleWidth), boundTopLeftY + scaleHeightOffset, scaleWidth, scaleHeight);
 
     // Draw platforms
-    cairo_rectangle(cr, boundTopLeftX + platformWidthOffset, boundTopLeftY + platformHeightOffset, platformWidth, platformHeight);
-    cairo_rectangle(cr, boundCenterX - (innerPlatformWidth / 2), boundCenterY - (innerPlatformHeight / 2), innerPlatformWidth, innerPlatformHeight);
-
-    cairo_set_source_rgb(cr, 0.1, 0.1, 0.1);
-    cairo_set_line_width(cr, 4);
-    cairo_stroke(cr);
+    DrawPlatform(cr, boundTopLeftX + platformWidthOffset, boundTopLeftY + platformHeightOffset, platformWidth, platformHeight,
+      boundCenterX - (innerPlatformWidth / 2), boundCenterY - (innerPlatformHeight / 2), innerPlatformWidth, innerPlatformHeight);
 
     // Draw Desks
     cairo_rectangle(cr, boundTopLeftX - playerStationDeskWidth, boundTopLeftY + boundSlantHeight, playerStationDeskWidth, playerStationHeight);
@@ -403,5 +399,82 @@ namespace AutonoScript
     cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
     cairo_set_line_width(cr, 4);
     cairo_stroke(cr);
+  }
+
+  void FieldGraphicsOutputGenerator::DrawPlatform(cairo_t* cr, int innerX, int innerY, int innerWidth, int innerHeight, int outerX, int outerY, int outerWidth, int outerHeight)
+  {
+    int outerLeftX, outerRightX;
+    int outerTopY, outerBottomY;
+
+    int innerLeftX, innerRightX;
+    int innerTopY, innerBottomY;
+    int centerX, centerY;
+
+    outerLeftX = outerX;
+    outerRightX = outerX + outerWidth;
+    outerTopY = outerY;
+    outerBottomY = outerY + outerHeight;
+
+    innerLeftX = innerX;
+    innerRightX = innerX + innerWidth;
+    innerTopY = innerY;
+    innerBottomY = innerY + innerHeight;
+
+    centerX = outerLeftX + (outerWidth / 2);
+    centerY = outerTopY + (outerHeight / 2);
+
+    // Red
+    cairo_rectangle(cr, innerLeftX, innerTopY, (innerWidth / 2), innerHeight);
+    cairo_set_source_rgb(cr, 0.81, 0.33, 0.33);
+    cairo_fill(cr);
+
+    // Light Pink
+    cairo_move_to(cr, centerX, outerTopY);
+    cairo_line_to(cr, centerX, innerTopY);
+    cairo_line_to(cr, innerLeftX, innerTopY);
+    cairo_line_to(cr, innerLeftX, innerBottomY);
+    cairo_line_to(cr, outerLeftX, outerBottomY);
+    cairo_line_to(cr, outerLeftX, outerTopY);
+    cairo_close_path(cr);
+
+    cairo_set_source_rgb(cr, 0.99, 0.58, 0.58);
+    cairo_fill(cr);
+
+    // Dark Red
+    cairo_move_to(cr, centerX, innerBottomY);
+    cairo_line_to(cr, centerX, outerBottomY);
+    cairo_line_to(cr, outerLeftX, outerBottomY);
+    cairo_line_to(cr, innerLeftX, innerBottomY);
+    cairo_close_path(cr);
+
+    cairo_set_source_rgb(cr, 0.53, 0.1, 0.1);
+    cairo_fill(cr);
+
+    // Blue
+    cairo_rectangle(cr, centerX, innerY, innerWidth / 2, innerHeight);
+    cairo_set_source_rgb(cr, 0.25, 0.44, 0.92);
+    cairo_fill(cr);
+
+    // Light Blue
+    cairo_move_to(cr, centerX, outerTopY);
+    cairo_line_to(cr, outerRightX, outerTopY);
+    cairo_line_to(cr, innerRightX, innerTopY);
+    cairo_line_to(cr, centerX, innerTopY);
+    cairo_close_path(cr);
+
+    cairo_set_source_rgb(cr, 0.49, 0.71, 0.98);
+    cairo_fill(cr);
+
+    // Dark Blue
+    cairo_move_to(cr, centerX, innerBottomY);
+    cairo_line_to(cr, innerRightX, innerBottomY);
+    cairo_line_to(cr, innerRightX, innerTopY);
+    cairo_line_to(cr, outerRightX, outerTopY);
+    cairo_line_to(cr, outerRightX, outerBottomY);
+    cairo_line_to(cr, centerX, outerBottomY);
+    cairo_close_path(cr);
+
+    cairo_set_source_rgb(cr, 0.04, 0.2, 0.71);
+    cairo_fill(cr);
   }
 }
