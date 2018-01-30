@@ -14,9 +14,6 @@ namespace AutonoScript
 
       void EvaluateMove(FieldFacing* initialFacing, FacingRegulator* regulator, int distance, double movementFacing, FieldFacing** nextFacing);
       void EvaluateRotation(FieldFacing* initialFacing, FacingRegulator* regulator, double rotation, FieldFacing** nextFacing);
-
-    private:
-      void GetMovementComponents(double adjustedFacing, int distance, int* adjacent, int* opposite, int* sector);
   };
 }
 #endif

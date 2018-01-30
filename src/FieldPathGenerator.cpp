@@ -61,7 +61,7 @@ namespace AutonoScript
     if (commandType == RotateClockwise || commandType == RotateCounterClockwise)
     {
       if (commandType == RotateCounterClockwise)
-        nextMagnitude *= -1;
+        nextMagnitude = nextMagnitude * -1;
 
       GetNextRotationFacing(current, regulator, nextMagnitude, next);
       return;
