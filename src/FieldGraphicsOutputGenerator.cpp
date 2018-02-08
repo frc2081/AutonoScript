@@ -410,6 +410,18 @@ namespace AutonoScript
     int innerTopY, innerBottomY;
     int centerX, centerY;
 
+    int scaleWidth, scaleHeight, scaleOffset;
+    int scaleX, scaleTopY, scaleBottomY;
+
+    int connectorWidth, connectorHeight, connectorOverlap;
+    int connectorX, connectorY;
+
+    scaleWidth = 122;
+    scaleHeight = 91;
+    scaleOffset = 2;
+    connectorWidth = 35;
+    connectorOverlap = 5;
+
     outerLeftX = outerX;
     outerRightX = outerX + outerWidth;
     outerTopY = outerY;
@@ -422,6 +434,14 @@ namespace AutonoScript
 
     centerX = outerLeftX + (outerWidth / 2);
     centerY = outerTopY + (outerHeight / 2);
+
+    scaleX = centerX - (scaleWidth / 2);
+    scaleTopY = outerTopY - scaleOffset - scaleHeight;
+    scaleBottomY = outerBottomY + scaleOffset;
+
+    connectorX = centerX - (connectorWidth / 2);
+    connectorY = scaleTopY - connectorOverlap + scaleHeight;
+    connectorHeight = scaleBottomY + (connectorOverlap * 2) - (scaleTopY + scaleHeight);
 
     // Red
     cairo_rectangle(cr, innerLeftX, innerTopY, (innerWidth / 2), innerHeight);
@@ -476,5 +496,17 @@ namespace AutonoScript
 
     cairo_set_source_rgb(cr, 0.04, 0.2, 0.71);
     cairo_fill(cr);
+    
+    // Draw Scales
+    cairo_rectangle(cr, scaleX, scaleTopY, scaleWidth, scaleHeight);
+    cairo_rectangle(cr, scaleX, scaleBottomY, scaleWidth, scaleHeight);
+    cairo_rectangle(cr, connectorX, connectorY, connectorWidth, connectorHeight);
+
+    cairo_set_source_rgb(cr, 0.3, 0.3, 0.3);
+    cairo_fill_preserve(cr);
+
+    cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
+    cairo_set_line_width(cr, 4);
+    cairo_stroke(cr);
   }
 }
