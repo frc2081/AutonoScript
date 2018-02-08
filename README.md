@@ -88,7 +88,7 @@ Usage: cmd (-f FILE | -S SCRIPT) [-o FILE -t TEAM -p POSITION [-T OUTPUT_TYPE]]
 
 Produces a graphic called foo.png, with the robot starting at team RED, position 1, and following the path specified by -S.  This currently produces:
 
-![foo.png](https://i.imgur.com/dPb8wOO.png)
+![foo.png](https://i.imgur.com/ZMKG4Tq.png)
 
 
 
