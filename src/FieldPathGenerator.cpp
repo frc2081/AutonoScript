@@ -20,7 +20,7 @@ namespace AutonoScript
     FieldPath* path;
     int commandCount;
     commandCount = commands->GetCommandCount();
-    FacingRegulator* regulator = new FacingRegulator(initialFacing->GetFacing());
+    FacingRegulator* regulator = new FacingRegulator();
 
     FieldFacing* currentFacing, *nextFacing;
     currentFacing = initialFacing->Clone();

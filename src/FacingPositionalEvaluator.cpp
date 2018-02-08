@@ -23,7 +23,7 @@ namespace AutonoScript
     currentY = initialFacing->GetYCoordinate();
     currentFacing = initialFacing->GetFacing();
 
-    adjustedFacing = regulator->GetAdjustedFacing(movementFacing);
+    adjustedFacing = regulator->GetAdjustedFacing(currentFacing, movementFacing);
     theta = (adjustedFacing *PI/180);
 
     nextX = currentX + (distance * sin(theta));

@@ -4,19 +4,17 @@
 namespace AutonoScript
 {
   using namespace std;
-  FacingRegulator::FacingRegulator(double initialGyroFacing)
+  FacingRegulator::FacingRegulator()
   {
-    _initialGyroFacing = initialGyroFacing;
   }
 
   FacingRegulator::~FacingRegulator()
   {
-    _initialGyroFacing = 0;
   }
 
-  double FacingRegulator::GetAdjustedFacing(double facing)
+  double FacingRegulator::GetAdjustedFacing(double currentFacing, double movementFacing)
   {
-    return GetFacingValue(facing + _initialGyroFacing);
+    return GetFacingValue(currentFacing + movementFacing);
   }
 
   double FacingRegulator::GetFacingValue(double value)

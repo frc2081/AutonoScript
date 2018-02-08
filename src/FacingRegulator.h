@@ -6,14 +6,13 @@ namespace AutonoScript
   class FacingRegulator
   {
     public:
-      FacingRegulator(double initalGyroFacing);
+      FacingRegulator();
       virtual ~FacingRegulator();
 
-      double GetAdjustedFacing(double facing);
+      double GetAdjustedFacing(double currentFacing, double movementFacing);
       double GetFacingValue(double value);
 
     private:
-      double _initialGyroFacing;
 
   };
 }
