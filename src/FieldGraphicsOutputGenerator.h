@@ -17,6 +17,8 @@ namespace AutonoScript
       void DrawBounds(cairo_t* cr, FieldPosition* topLeft, FieldPosition* bottomRight);
 			void DrawPath(cairo_t* cr, FieldPath* path, FieldPosition* topLeft, FieldPosition* bottomRight);
       void DrawRobot(cairo_t* cr, FieldFacing* vector, FieldPosition* topLeft, FieldPosition* bottomRight, bool isRed);
+      void DrawScales(cairo_t* cr, int xAxis, int yAxis, int width, int height);
+      void DrawPlatform(cairo_t* cr, int innerX, int innerY, int innerWidth, int innerHeight, int outerX, int outerY, int outerWidth, int outerHeight);
 			cairo_surface_t* BuildSurface(FieldPosition* topLeft, FieldPosition* bottomRight);
   };
 }
