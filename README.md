@@ -34,7 +34,7 @@
 ````
  M MAGNITUDE FACING
 ````
-  The move operator takes two operands: magnitude (distance (in meters) the robot should travel) and facing (the angle it should move on (relative to where the robot was first facing and had its gyro zeroed.))  So for the command ````M 3 45````, the robot will travel 3 meters, 45 degrees from where the robot started.
+  The move operator takes two operands: magnitude (distance (in meters) the robot should travel) and facing (the angle it should move on (relative to where the front of the robot is facing.))  So for the command ````M 3 45````, the robot will travel 3 meters, 45 degrees from where the robot is facing.
   
 ### RC
 ````
@@ -54,7 +54,7 @@ M 3 0
 M 1 45
 RCC 90
 ````
-  This script would move the robot forward 3 meters, then travel 45 degrees for one meter, then it will rotate counterclockwise 90 degrees (facing left, from where the robot originally started.)
+  This script would move the robot forward 3 meters, then travel 45 degrees for one meter, then it will rotate counterclockwise 90 degrees (facing left, from where the robot is facing.)
   
 ## AutonoscriptCommand.exe
 ### Full Description
